@@ -11,6 +11,9 @@
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "DM Serif Display", Georgia, serif;
+  /* Punto de corte extra: a partir de 1400 px cabe el inicio a tamaño completo (diseño de 1440) */
+  --breakpoint-hd: 87.5rem;
+
   --font-logo: "Poppins", ui-sans-serif, sans-serif; /* logos de ceac y Henry */
 
   --color-cream: #f5f0ea; /* fondo de sección */

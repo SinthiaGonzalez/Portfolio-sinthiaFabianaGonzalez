@@ -4,6 +4,15 @@ import SectionTitle from './SectionTitle.astro';
 import Decor from './Decor.astro';
 import Icon from './Icon.astro';
 import Deco from './Deco.astro';
+import { Image } from 'astro:assets';
+import capturaSerena from '../assets/proyectos/serena-hotel.png';
+import capturaPortfolio from '../assets/proyectos/portfolio.png';
+
+// Capturas reales de cada proyecto (si no hay, se muestra la maqueta de ventana)
+const capturas: Record<string, ImageMetadata> = {
+  hotel: capturaSerena,
+  portfolio: capturaPortfolio,
+};
 
 const shotColors: Record<string, string> = {
   hotel: 'bg-[#cdbba8]',
@@ -35,16 +44,27 @@ const btn =
                 <i class="block size-[7px] rounded-full bg-sage" />
                 <i class="block size-[7px] rounded-full bg-sage" />
               </div>
-              <div class="flex flex-col gap-2 p-3.5">
-                <span class="font-serif text-lg">{p.mockTitle ?? p.name}</span>
-                <i class="block h-2 w-[85%] rounded bg-[#ddd3c2]" />
-                <i class="block h-2 w-[60%] rounded bg-[#ddd3c2]" />
-                <span class="mt-1.5 flex gap-2">
-                  <i class="block h-11 flex-1 rounded-md bg-sand" />
-                  <i class="block h-11 flex-1 rounded-md bg-sand" />
-                  <i class="block h-11 flex-1 rounded-md bg-sand" />
-                </span>
-              </div>
+              {capturas[p.color] ? (
+                <Image
+                  src={capturas[p.color]}
+                  alt=""
+                  widths={[400, 800]}
+                  sizes="(min-width: 1024px) 30vw, 85vw"
+                  class="h-[138px] w-full object-cover object-top"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="flex flex-col gap-2 p-3.5">
+                  <span class="font-serif text-lg">{p.mockTitle ?? p.name}</span>
+                  <i class="block h-2 w-[85%] rounded bg-[#ddd3c2]" />
+                  <i class="block h-2 w-[60%] rounded bg-[#ddd3c2]" />
+                  <span class="mt-1.5 flex gap-2">
+                    <i class="block h-11 flex-1 rounded-md bg-sand" />
+                    <i class="block h-11 flex-1 rounded-md bg-sand" />
+                    <i class="block h-11 flex-1 rounded-md bg-sand" />
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 

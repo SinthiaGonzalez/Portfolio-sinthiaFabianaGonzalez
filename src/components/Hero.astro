@@ -11,7 +11,7 @@ const socials = [
 ] as const;
 ---
 
-<section id="inicio" class="relative flex flex-col items-center gap-6 px-6 pb-16 text-center md:px-10 md:pb-20 lg:min-h-[680px] lg:flex-row lg:justify-between lg:gap-8 lg:pt-[30px] lg:pr-[60px] lg:pb-[110px] lg:pl-[140px] lg:text-left xl:pr-[120px] xl:pl-[160px]">
+<section id="inicio" class="relative flex flex-col items-center gap-6 px-6 pb-16 text-center md:px-10 md:pb-20 lg:min-h-[680px] lg:flex-row lg:justify-between lg:gap-8 lg:pt-[30px] lg:pr-[60px] lg:pb-[110px] lg:pl-[140px] lg:text-left hd:pr-[120px] hd:pl-[160px]">
   <!-- Hojas que caen por la sección (aparecen arriba, caen, se desvanecen y vuelven a caer) -->
   <Deco pieza="maple" cae class="top-6 left-[48%] z-[1] w-[26px] md:w-[34px]" />
   <!-- Esta pasa por DETRÁS de la ilustración: nace escondida tras el avatar y aparece al caer -->
@@ -29,7 +29,7 @@ const socials = [
     }
   </div>
 
-  <div class="relative z-[2] flex w-full flex-col items-center lg:w-[600px] lg:shrink-0 lg:items-start">
+  <div class="relative z-[2] flex w-full flex-col items-center lg:max-w-[600px] lg:min-w-0 lg:flex-1 lg:items-start">
     <p data-hero-item data-reveal class="font-serif text-2xl lg:text-[34px]">{hero.greeting}</p>
     <h1 data-hero-item data-reveal class="font-serif text-[42px] leading-[1.02] md:text-6xl xl:text-[84px]">{site.name}</h1>
     <p data-hero-item data-reveal class="my-3 text-sm font-semibold tracking-[2px] text-olive uppercase md:my-[18px] md:text-xl md:tracking-[3px]">{site.role}</p>
@@ -54,7 +54,7 @@ const socials = [
     </div>
   </div>
 
-  <div class="relative z-[1] order-first size-[335px] [--hero-scale:0.62] sm:size-[405px] sm:[--hero-scale:0.75] lg:order-none xl:size-[540px] xl:[--hero-scale:1]">
+  <div class="relative z-[1] order-first size-[335px] [--hero-scale:0.62] sm:size-[405px] sm:[--hero-scale:0.75] lg:order-none lg:shrink-0 hd:size-[540px] hd:[--hero-scale:1]">
     <HeroVisual />
   </div>
 </section>
