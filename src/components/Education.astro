@@ -5,15 +5,21 @@ import Decor from './Decor.astro';
 import Deco from './Deco.astro';
 ---
 
-<section id="formacion" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+<section id="formacion" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
   <Decor blobs={{ left: { color: '#5D6C52', top: '30%' }, right: { color: '#D5C3B0', top: '62%' } }} />
+  <!-- Ramas a los lados con la misma rotación y posición que en "Sobre mí"
+       (laurel por la izquierda, olivo por la derecha) -->
+  <Deco pieza="laurel" id="rama-formacion-laurel" class="top-[28%] left-[12px] z-0 w-[80px] rotate-[19deg] md:left-[28px] md:w-[120px] lg:left-[-30px] lg:w-[170px]" />
+  <Deco pieza="olivo" id="rama-formacion-olivo" class="top-[58%] right-[15px] z-0 w-[95px] -rotate-[20deg] md:right-[34px] md:w-[145px] lg:right-[10px] lg:w-[220px]" />
+  <!-- Lluvia de hojas por la sección, por detrás de las tarjetas (nunca tapan el texto) -->
+  <Deco pieza="fallen" cae class="top-6 left-[6%] z-[1] w-[22px] md:w-[28px]" />
+  <Deco pieza="maple" cae class="top-24 left-[24%] z-[1] w-[20px] md:w-[28px]" />
+  <Deco pieza="falling" cae class="top-2 left-[46%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="fallen" cae class="top-20 right-[26%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="maple" cae class="top-8 right-[8%] z-[1] w-[22px] md:w-[30px]" />
   <SectionTitle title={education.title} />
 
   <div class="relative z-[2]">
-    <!-- Laurel y olivo asomando detrás de las tarjetas -->
-    <Deco pieza="laurel" id="rama-formacion-laurel" class="top-0 -left-[40px] z-[1] hidden w-[100px] -rotate-12 md:block lg:-left-[50px] lg:w-[130px]" />
-    <Deco pieza="olivo" id="rama-formacion-olivo" class="-right-[40px] bottom-0 z-[1] hidden w-[120px] rotate-6 md:block lg:-right-[50px] lg:w-[160px]" />
-
     <ul class="relative z-[2] flex flex-wrap justify-center gap-6">
       {
         education.items.map((item) => (
@@ -29,7 +35,6 @@ import Deco from './Deco.astro';
                 <>
                   <span class="text-xs font-semibold tracking-[5px] text-muted">ACADEMIA</span>
                   <span class="font-serif text-[56px] leading-none text-terra">Arca</span>
-                  <span class="text-[11px] font-semibold tracking-[3px] text-muted">· SEPE ·</span>
                 </>
               )}
               {item.logo === 'henry' && (

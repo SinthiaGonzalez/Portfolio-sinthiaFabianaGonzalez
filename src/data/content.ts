@@ -108,7 +108,7 @@ export const education = {
   title: 'Formación',
   items: [
     { logo: 'ceac', title: 'Desarrollo de Aplicaciones Web (DAW)', org: 'CEAC FP Oficial', date: '09/2024 - Finalizado' },
-    { logo: 'arca', title: 'Seguridad informática · IFCT0109', org: 'Academia Arca · SEPE', date: '11/2024 - 05/2025' },
+    { logo: 'arca', title: 'Seguridad informática · IFCT0109', org: 'Academia Arca', date: '11/2024 - 05/2025' },
     { logo: 'henry', title: 'Full Stack Web Developer', org: 'Campus Virtual Henry', date: '04/2023 - 12/2023' },
   ],
   certsTitle: 'Certificaciones',
