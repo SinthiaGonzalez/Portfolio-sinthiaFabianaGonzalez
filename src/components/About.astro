@@ -61,13 +61,13 @@ import Deco from './Deco.astro';
 
 <script>
   // Animaciones de "Sobre mí" (Motion). Se activan una sola vez, al llegar a la sección.
-  import { animate, stagger, inView, reducedMotion, easeOut } from '../scripts/motion';
+  import { animate, stagger, onceInView, reducedMotion, easeOut } from '../scripts/motion';
 
   const section = document.getElementById('sobre-mi')!;
   const $ = <T extends Element = HTMLElement>(sel: string) => [...section.querySelectorAll<T>(sel)];
 
   if (!reducedMotion()) {
-    inView(
+    onceInView(
       section,
       () => {
         // Título: sube, la ramita se "planta" con un giro y la línea curva se dibuja

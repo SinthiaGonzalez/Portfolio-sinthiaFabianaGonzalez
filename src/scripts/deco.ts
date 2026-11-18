@@ -1,21 +1,23 @@
 // Anima toda la decoración botánica (componente Deco.astro) cuando entra en pantalla.
-// Una sola vez por pieza; con "reducir movimiento" no se ejecuta y todo se ve quieto.
-import { animate, inView, reducedMotion, easeOut } from './motion';
+// Cada animación arranca UNA sola vez (onceInView); con "reducir movimiento" no se
+// ejecuta nada y todo se ve quieto.
+import { animate, reducedMotion, easeOut, onceInView } from './motion';
 import { animatePlanta } from './planta';
 
 if (!reducedMotion()) {
   const opts = { amount: 0.15 };
+  const azar = (min: number, max: number) => min + Math.random() * (max - min);
 
   // Laurel y olivo: el tallo crece, las hojas se abren y luego la rama se mece entera
   // (si la rama va dentro de otro dibujo SVG, como en el Inicio, se observa ese dibujo:
   //  el navegador no detecta la visibilidad de un SVG anidado)
   document.querySelectorAll<SVGSVGElement>('[data-planta]').forEach((el) => {
-    inView(el.ownerSVGElement ?? el, () => animatePlanta(el, 0.1), opts);
+    onceInView(el.ownerSVGElement ?? el, () => animatePlanta(el, 0.1), opts);
   });
 
   // Ramas de acento: aparecen y se balancean despacio
   document.querySelectorAll<SVGElement>('[data-deco="sway"]').forEach((el, i) => {
-    inView(
+    onceInView(
       el,
       () => {
         animate(el, { opacity: [0, 1], scale: [0.85, 1] }, { duration: 0.9, ease: easeOut }).then(() =>
@@ -27,14 +29,16 @@ if (!reducedMotion()) {
   });
 
   // Hojas que caen: bajan balanceándose y girando hasta el final de su sección,
-  // se desvanecen y, tras una pausa, vuelven a caer desde arriba (sin parar)
+  // se desvanecen y, tras una pausa, vuelven a caer desde arriba (sin parar).
+  // Cada hoja tiene su propio retraso inicial, velocidad y pausa al azar,
+  // así nunca caen todas a la vez.
   document.querySelectorAll<SVGElement>('[data-deco="fall"]').forEach((el, i) => {
     const section = el.closest('section') ?? document.body;
     const caer = () => {
       // distancia hasta el final de la sección, medida cada vez (por si cambia el tamaño de la ventana)
       el.style.transform = 'none';
       const dist = section.getBoundingClientRect().bottom - el.getBoundingClientRect().top - 50;
-      const lado = i % 2 ? -1 : 1;
+      const lado = Math.random() < 0.5 ? -1 : 1; // gira y se balancea hacia un lado distinto cada vez
       animate(
         el,
         {
@@ -43,15 +47,16 @@ if (!reducedMotion()) {
           rotate: [0, 70 * lado, 160 * lado, 250 * lado],
           opacity: [0, 1, 1, 1, 0],
         },
-        { duration: 9 + (i % 3) * 1.5, ease: 'linear' },
-      ).then(() => setTimeout(caer, 800 + Math.random() * 2200));
+        { duration: azar(8, 13), ease: 'linear' },
+      ).then(() => setTimeout(caer, azar(1500, 5000)));
     };
-    inView(el.closest('section') ?? el, () => void setTimeout(caer, i * 2500), opts);
+    // la primera hoja cae enseguida y las demás bastante después, en orden distinto cada visita
+    onceInView(section, () => void setTimeout(caer, i * 3500 + azar(0, 2000)), opts);
   });
 
   // Hojas sueltas: aparecen y flotan como si las moviera el aire
   document.querySelectorAll<SVGElement>('[data-deco="float"]').forEach((el, i) => {
-    inView(
+    onceInView(
       el,
       () => {
         animate(el, { opacity: [0, 1] }, { duration: 0.8, ease: easeOut, delay: 0.3 }).then(() =>
