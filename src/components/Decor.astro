@@ -4,8 +4,10 @@ interface Props {
   waves?: boolean;
   /** Manchas laterales: color y posición vertical (en %). */
   blobs?: { left: { color: string; top: string }; right: { color: string; top: string } };
+  /** Anima las manchas: sus bordes se deforman ligeramente en bucle, sin dejar de ser redondas (scripts/deco.ts). */
+  morph?: boolean;
 }
-const { waves = false, blobs } = Astro.props;
+const { waves = false, blobs, morph = false } = Astro.props;
 const blobPath =
   'M120 10 C190 0 250 60 240 140 C232 210 170 250 110 236 C46 222 4 170 10 108 C15 52 60 18 120 10Z';
 ---
@@ -26,10 +28,10 @@ const blobPath =
   blobs && (
     <>
       <svg class="pointer-events-none absolute -left-14 z-0 size-[125px] md:-left-21 md:size-[188px] lg:-left-28 lg:size-[250px]" style={`top:${blobs.left.top}`} viewBox="0 0 250 250" aria-hidden="true">
-        <path d={blobPath} fill={blobs.left.color} opacity=".2" />
+        <path data-morph={morph || undefined} d={blobPath} fill={blobs.left.color} opacity=".2" />
       </svg>
       <svg class="pointer-events-none absolute -right-13 z-0 size-[125px] md:-right-20 md:size-[188px] lg:-right-26 lg:size-[250px]" style={`top:${blobs.right.top}`} viewBox="0 0 250 250" aria-hidden="true">
-        <path d={blobPath} fill={blobs.right.color} opacity=".2" />
+        <path data-morph={morph || undefined} d={blobPath} fill={blobs.right.color} opacity=".2" />
       </svg>
     </>
   )

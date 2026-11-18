@@ -12,8 +12,15 @@ const iconUrl = (name: string) => icons[`../assets/skills/${name}.svg`]?.default
 const cardColors = ['bg-card', 'bg-sand-dark', 'bg-[#e4e8da]'];
 ---
 
-<section id="habilidades" class="relative bg-sand px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
-  <Decor waves blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
+<section id="habilidades" data-fall-area class="relative bg-sand px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Decor waves morph blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
+  <!-- Hojas que caen por la sección, por detrás de las tarjetas (nunca tapan los iconos) -->
+  <Deco pieza="maple" cae class="top-10 left-[5%] z-[1] w-[22px] md:w-[30px]" />
+  <Deco pieza="falling" cae class="top-28 left-[22%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="fallen" cae class="top-8 left-[40%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="maple" cae class="top-24 right-[30%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="falling" cae class="top-14 right-[14%] z-[1] w-[22px] md:w-[28px]" />
+  <Deco pieza="fallen" cae class="top-4 right-[3%] z-[1] w-[22px] md:w-[28px]" />
   <Deco pieza="fallen" class="top-16 right-[10%] w-[24px] md:w-[30px] lg:top-24 lg:right-[16%] lg:w-[38px]" />
   <SectionTitle title={skills.title} />
 

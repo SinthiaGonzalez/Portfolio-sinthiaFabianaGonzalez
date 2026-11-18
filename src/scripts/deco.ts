@@ -68,6 +68,36 @@ if (!reducedMotion()) {
     onceInView(section, () => void setTimeout(caer, j * (area ? 1300 : 3500) + azar(0, 1500)), opts);
   });
 
+  // Manchas que se deforman ligeramente (Decor con `morph`): siguen siendo redondas, pero sus
+  // bordes se aplanan y se abomban poco a poco, en bucle. Todas las formas tienen los mismos
+  // puntos, así que basta con interpolar los números del trazado.
+  const formas = [
+    'M120 10 C190 0 250 60 240 140 C232 210 170 250 110 236 C46 222 4 170 10 108 C15 52 60 18 120 10Z',
+    'M140 22 C214 18 248 84 236 156 C222 226 140 248 92 226 C34 200 18 150 30 98 C40 46 84 26 140 22Z',
+    'M100 4 C176 2 238 40 232 120 C226 196 196 246 124 248 C56 250 6 196 4 124 C2 56 36 8 100 4Z',
+    'M126 30 C186 26 226 74 224 140 C222 206 182 244 108 246 C36 248 2 196 6 120 C12 60 70 34 126 30Z',
+    'M118 4 C200 2 248 40 248 118 C246 190 176 228 116 226 C56 224 16 182 14 116 C12 54 50 8 118 4Z',
+  ];
+  const nums = formas.map((f) => f.match(/-?\d+(\.\d+)?/g)!.map(Number));
+  const plantilla = formas[0].split(/-?\d+(?:\.\d+)?/);
+  document.querySelectorAll<SVGPathElement>('[data-morph]').forEach((path, i) => {
+    const ciclo = [...nums, nums[0]];
+    onceInView(path.ownerSVGElement ?? path, () => {
+      animate(0, ciclo.length - 1, {
+        duration: 11 + i * 2.5,
+        ease: 'linear',
+        repeat: Infinity,
+        onUpdate: (v) => {
+          const k = Math.min(Math.floor(v), ciclo.length - 2);
+          const t = v - k;
+          const e = t * t * (3 - 2 * t); // suavizado entre forma y forma
+          const valores = ciclo[k].map((n, j) => (n + (ciclo[k + 1][j] - n) * e).toFixed(1));
+          path.setAttribute('d', plantilla.map((txt, j) => txt + (valores[j] ?? '')).join(''));
+        },
+      });
+    });
+  });
+
   // Hojas sueltas: aparecen y flotan como si las moviera el aire
   document.querySelectorAll<SVGElement>('[data-deco="float"]').forEach((el, i) => {
     onceInView(
