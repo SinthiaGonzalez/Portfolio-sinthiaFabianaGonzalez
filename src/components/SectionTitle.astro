@@ -15,9 +15,12 @@ import Sprig from '../assets/deco/piezas/rama-olivo-frutos.svg';
 <div class:list={['relative z-[2] mb-9 text-center md:mb-14', className]}>
   <h2 class="font-serif text-4xl leading-tight md:text-[42px] lg:text-[52px]">
     <span data-title={animate || undefined} data-reveal={animate || undefined} class="inline-block">{title}</span>
+    <!-- Ramita de olivo: el extremo del tallo (a la izquierda, ~3 % del ancho y ~53 % del alto)
+         nace en el pie de la última letra y la rama crece hacia la derecha. Medidas en em para
+         que encaje igual con cualquier tamaño de título. -->
     {sprig && (
-      <span data-title-sprig={animate || undefined} data-reveal={animate || undefined} class="ml-1.5 inline-block origin-bottom-left align-top">
-        <Sprig class="h-auto w-[48px] -scale-x-100 lg:w-[64px]" aria-hidden="true" />
+      <span data-title-sprig={animate || undefined} data-reveal={animate || undefined} class="relative top-[0.57em] -ml-[0.18em] inline-block origin-[3%_53%] align-baseline">
+        <Sprig class="block h-auto w-[1.3em]" aria-hidden="true" />
       </span>
     )}
   </h2>

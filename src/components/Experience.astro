@@ -4,7 +4,13 @@ import SectionTitle from './SectionTitle.astro';
 import Deco from './Deco.astro';
 ---
 
-<section id="experiencia" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+<section id="experiencia" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <!-- Hojas que caen por la sección, por detrás de la tarjeta (nunca tapan el texto) -->
+  <Deco pieza="falling" cae class="top-4 left-[4%] z-[1] w-[22px] md:w-[28px]" />
+  <Deco pieza="fallen" cae class="top-24 left-[20%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="maple" cae class="top-6 left-[50%] z-[1] w-[22px] md:w-[30px]" />
+  <Deco pieza="falling" cae class="top-20 right-[18%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="fallen" cae class="top-2 right-[5%] z-[1] w-[22px] md:w-[28px]" />
   <Deco pieza="maple" class="top-10 left-[8%] w-[26px] md:w-[34px] lg:top-16 lg:left-[14%] lg:w-[42px]" />
   <SectionTitle title={experience.title} />
 

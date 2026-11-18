@@ -8,16 +8,15 @@ import Deco from './Deco.astro';
 
 <section id="sobre-mi" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
   <FernsBg class="pointer-events-none absolute top-0 left-0 h-auto w-full" aria-hidden="true" />
-  <!-- Ramas a los lados: laurel a la izquierda, olivo a la derecha -->
-  <Deco pieza="laurel" id="rama-sobre-izq" class="top-4 -left-4 z-0 w-[80px] md:top-8 md:w-[120px] lg:-left-6 lg:w-[170px]" />
-  <Deco pieza="olivo" id="rama-sobre-der" class="top-2 -right-3 z-0 w-[95px] md:w-[145px] lg:-right-4 lg:w-[220px]" />
+  <!-- Ramas que entran desde los bordes de la página: el arranque del tallo queda fuera
+       de la pantalla (laurel por la izquierda, olivo por la derecha) -->
+  <Deco pieza="laurel" id="rama-sobre-izq" class="top-0 left-[12px] z-0 w-[80px] rotate-[19deg] md:left-[28px] md:w-[120px] lg:left-[-30px] lg:w-[170px]" />
+  <Deco pieza="olivo" id="rama-sobre-der" class="-top-1 right-[15px] z-0 w-[95px] -rotate-[20deg] md:right-[34px] md:w-[145px] lg:-top-2 lg:right-[10px] lg:w-[220px]" />
 
   <SectionTitle title={about.title} sprig animate />
 
   <div class="relative z-[2] flex flex-col items-center gap-4 text-center md:gap-6 lg:flex-row lg:gap-16 lg:text-left">
     <div data-about-art data-reveal class="relative isolate w-full max-w-[340px] shrink-0 md:max-w-[400px] lg:max-w-[480px]">
-      <!-- Rama terracota asomando detrás de la ilustración -->
-      <Deco pieza="terracota" class="bottom-[12%] -left-[6%] -z-10 w-[38%] -rotate-12" />
       <AboutArt />
     </div>
 
@@ -78,6 +77,10 @@ import Deco from './Deco.astro';
         // Ilustración: aparece y después sus puntos flotan
         // (las ramas y hojas de toda la página las anima scripts/deco.ts)
         animate($('[data-about-art]'), { opacity: [0, 1], scale: [0.92, 1], y: [30, 0] }, { duration: 0.9, ease: easeOut, delay: 0.2 });
+        // Manchas de fondo: flotan despacio, cada una a su ritmo
+        $<SVGPathElement>('[data-about-blob]').forEach((b, i) => {
+          animate(b, { y: [0, i % 2 ? 10 : -10, 0], x: [0, i % 2 ? -6 : 6, 0] }, { duration: 6 + i * 1.3, ease: 'easeInOut', repeat: Infinity, delay: 0.8 + i * 0.4 });
+        });
         $<SVGCircleElement>('[data-about-dot]').forEach((c, i) => {
           animate(c, { y: [0, i % 2 ? 6 : -6, 0] }, { duration: 3 + (i % 3), ease: 'easeInOut', repeat: Infinity, delay: i * 0.25 });
         });

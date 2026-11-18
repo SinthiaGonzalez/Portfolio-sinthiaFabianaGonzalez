@@ -52,9 +52,7 @@ export const about = {
   ],
   pills: [
     { icon: 'pin', label: 'Boiro, A Coruña' },
-    { icon: 'es', label: 'Español nativo' },
-    { icon: 'gl', label: 'Gallego básico' },
-    { icon: 'en', label: 'Inglés en curso' },
+    { icon: 'en', label: 'Inglés A2' },
   ],
 };
 
