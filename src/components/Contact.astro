@@ -9,16 +9,24 @@ const field =
   'w-full rounded-[14px] border border-[#ddd3c2] bg-cream px-5 text-[15px] text-ink placeholder:text-[#9a948a] focus:border-olive focus:ring-2 focus:ring-olive/20 focus:outline-none';
 ---
 
-<section id="contacto" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
-  <Decor blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
+<section id="contacto" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Decor morph blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
+  <!-- Lluvia de hojas por la sección, por detrás del formulario -->
+  <Deco pieza="maple" cae class="top-6 left-[5%] z-[1] w-[22px] md:w-[30px]" />
+  <Deco pieza="falling" cae class="top-24 left-[22%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="fallen" cae class="top-4 left-[48%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="maple" cae class="top-20 right-[24%] z-[1] w-[20px] md:w-[26px]" />
+  <Deco pieza="falling" cae class="top-8 right-[6%] z-[1] w-[22px] md:w-[28px]" />
+  <!-- Rama terracota que entra desde el borde derecho de la pantalla (volteada: el tallo
+       apunta al borde y su base queda fuera de la vista) -->
+  <Deco pieza="terracota" flip class="top-[52%] -right-[27px] z-[1] w-[80px] md:-right-[30px] md:w-[110px] lg:-right-[34px] lg:w-[160px]" />
   <SectionTitle title={contact.title} />
 
   <div class="relative z-[2] mx-auto w-full max-w-[760px]">
-    <!-- Ramas abrazando el formulario: olivo arriba a la izquierda, terracota abajo a la derecha -->
-    <Deco pieza="olivo" id="rama-contacto-olivo" flip class="-top-16 -left-3 z-[1] w-[70px] -rotate-12 md:-top-20 md:-left-16 md:w-[150px]" />
-    <Deco pieza="terracota" class="-right-8 -bottom-10 z-[1] w-[80px] rotate-[160deg] md:-right-16 md:-bottom-16 md:w-[130px]" />
-    <Deco pieza="fallen" class="-top-4 right-[6%] z-[3] w-[24px] md:-top-6 md:w-[32px]" />
-    <Deco pieza="falling" class="bottom-[18%] -left-5 z-[3] w-[22px] md:-left-9 md:w-[30px]" />
+    <!-- Ramas que nacen DETRÁS del formulario: la base del tallo queda bajo la tarjeta
+         y las hojas salen hacia fuera (olivos en las dos esquinas de arriba) -->
+    <Deco pieza="olivo" id="rama-contacto-olivo" class="-top-[71px] -left-[33px] z-[1] w-[70px] md:-top-[197px] md:-left-[105px] md:w-[150px]" />
+    <Deco pieza="olivo" id="rama-contacto-olivo-der" flip class="-top-[71px] -right-[33px] z-[1] w-[70px] md:-top-[197px] md:-right-[105px] md:w-[150px]" />
 
     <form id="contact-form" class="relative z-[2] flex flex-col gap-4 rounded-3xl border border-line bg-card px-5 py-7 md:px-14 md:py-12" novalidate>
       <p class="mb-2.5 text-center text-[15px] leading-relaxed text-muted md:text-lg">{contact.intro}</p>
