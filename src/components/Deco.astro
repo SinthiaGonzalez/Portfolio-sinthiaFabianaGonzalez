@@ -1,0 +1,36 @@
+---
+// Decoración botánica unificada de toda la web. Solo estas piezas (elegidas por Sinthia):
+//   laurel, olivo           -> ramas principales (crecen y se mecen)
+//   terracota, frutos       -> ramas de acento (aparecen y se balancean)
+//   maple, falling, fallen  -> hojas sueltas (aparecen y flotan; con `cae`, caen en bucle)
+// La animación la hace src/scripts/deco.ts para todas a la vez.
+import RamaLaurel from './RamaLaurel.astro';
+import RamaOlivo from './RamaOlivo.astro';
+import Terracota from '../assets/deco/piezas/rama-terracota.svg';
+import Frutos from '../assets/deco/piezas/rama-olivo-frutos.svg';
+import Maple from '../assets/deco/piezas/hoja-maple.svg';
+import Falling from '../assets/deco/piezas/hoja-falling.svg';
+import Fallen from '../assets/deco/piezas/hoja-fallen.svg';
+
+type Pieza = 'laurel' | 'olivo' | 'terracota' | 'frutos' | 'maple' | 'falling' | 'fallen';
+
+interface Props {
+  pieza: Pieza;
+  /** Obligatorio para laurel y olivo (sus degradados necesitan un id único). */
+  id?: string;
+  class?: string;
+  flip?: boolean;
+  /** Solo hojas sueltas: cae hasta el final de su sección, desaparece y vuelve a caer, sin parar. */
+  cae?: boolean;
+}
+
+const { pieza, id = '', class: className, flip = false, cae = false } = Astro.props;
+const base = ['pointer-events-none absolute h-auto', className, flip && '-scale-x-100'];
+const svgs = { terracota: Terracota, frutos: Frutos, maple: Maple, falling: Falling, fallen: Fallen };
+const anim = pieza === 'terracota' || pieza === 'frutos' ? 'sway' : cae ? 'fall' : 'float';
+const Svg = pieza === 'laurel' || pieza === 'olivo' ? null : svgs[pieza];
+---
+
+{pieza === 'laurel' && <RamaLaurel id={id} class:list={base} />}
+{pieza === 'olivo' && <RamaOlivo id={id} class:list={base} />}
+{Svg && <Svg class:list={base} data-deco={anim} aria-hidden="true" />}

@@ -1,0 +1,79 @@
+---
+import { nav } from '../data/content';
+---
+
+<header class="relative z-30">
+  <nav class="mx-auto flex items-center justify-between px-6 py-[18px] md:px-10 md:py-[22px] lg:px-[120px] lg:py-7" aria-label="Principal">
+    <a href="#inicio" class="flex size-[42px] items-center justify-center rounded-full bg-olive font-serif text-[17px] text-card lg:size-12 lg:text-xl" aria-label="Inicio">SG</a>
+
+    <div class="hidden items-center gap-6 text-base lg:flex xl:gap-[34px]">
+      {
+        nav.map((item, i) => (
+          <a href={`#${item.id}`} data-nav-link={item.id} class:list={['nav-link border-b-2 pb-1 transition-colors hover:text-olive', i === 0 ? 'is-active' : 'border-transparent']}>
+            {item.label}
+          </a>
+        ))
+      }
+      <div class="ml-2 flex overflow-hidden rounded-full border-[1.5px] border-olive text-[13px] font-semibold" role="group" aria-label="Idioma">
+        <span class="bg-olive px-[11px] py-[5px] text-white" aria-current="true">ES</span>
+        <span class="px-[11px] py-[5px] text-olive-dark opacity-60" title="Versión en inglés próximamente">EN</span>
+      </div>
+    </div>
+
+    <button id="menu-toggle" type="button" class="flex flex-col gap-[5px] p-2 lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
+      <i class="block h-0.5 w-6 bg-ink transition"></i>
+      <i class="block h-0.5 w-6 bg-ink transition"></i>
+      <i class="block h-0.5 w-6 bg-ink transition"></i>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="absolute inset-x-4 top-full hidden rounded-2xl border border-line bg-card p-4 shadow-lg lg:hidden">
+    <ul class="flex flex-col">
+      {
+        nav.map((item) => (
+          <li>
+            <a href={`#${item.id}`} class="block rounded-lg px-4 py-3 text-base hover:bg-sand">{item.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<style>
+  .nav-link.is-active {
+    color: var(--color-olive);
+    font-weight: 600;
+    border-color: var(--color-olive);
+  }
+</style>
+
+<script>
+  // Menú móvil
+  const toggle = document.getElementById('menu-toggle')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const setOpen = (open: boolean) => {
+    menu.classList.toggle('hidden', !open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  };
+  toggle.addEventListener('click', () => setOpen(menu.classList.contains('hidden')));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+  // Marca en el menú la sección visible
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        links.forEach((l) => {
+          const active = l.dataset.navLink === entry.target.id;
+          l.classList.toggle('is-active', active);
+          l.classList.toggle('border-transparent', !active);
+        });
+      }
+    },
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  document.querySelectorAll('main > section[id]').forEach((s) => observer.observe(s));
+</script>

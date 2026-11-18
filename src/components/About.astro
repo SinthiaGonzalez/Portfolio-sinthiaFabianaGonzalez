@@ -1,0 +1,92 @@
+---
+import { about, site } from '../data/content';
+import SectionTitle from './SectionTitle.astro';
+import AboutArt from './AboutArt.astro';
+import FernsBg from '../assets/deco/deco-s1-1.svg';
+import Deco from './Deco.astro';
+---
+
+<section id="sobre-mi" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <FernsBg class="pointer-events-none absolute top-0 left-0 h-auto w-full" aria-hidden="true" />
+  <!-- Ramas a los lados: laurel a la izquierda, olivo a la derecha -->
+  <Deco pieza="laurel" id="rama-sobre-izq" class="top-4 -left-4 z-0 w-[80px] md:top-8 md:w-[120px] lg:-left-6 lg:w-[170px]" />
+  <Deco pieza="olivo" id="rama-sobre-der" class="top-2 -right-3 z-0 w-[95px] md:w-[145px] lg:-right-4 lg:w-[220px]" />
+
+  <SectionTitle title={about.title} sprig animate />
+
+  <div class="relative z-[2] flex flex-col items-center gap-4 text-center md:gap-6 lg:flex-row lg:gap-16 lg:text-left">
+    <div data-about-art data-reveal class="relative isolate w-full max-w-[340px] shrink-0 md:max-w-[400px] lg:max-w-[480px]">
+      <!-- Rama terracota asomando detrás de la ilustración -->
+      <Deco pieza="terracota" class="bottom-[12%] -left-[6%] -z-10 w-[38%] -rotate-12" />
+      <AboutArt />
+    </div>
+
+    <div class="flex flex-1 flex-col gap-4">
+      <p data-about-item data-reveal class="font-serif text-[30px] text-olive-dark lg:text-[38px]">{site.fullName}</p>
+      <p data-about-item data-reveal class="-mt-1.5 text-base font-medium tracking-[1.5px] text-terra uppercase lg:text-lg">{site.roleJunior}</p>
+      {
+        about.paragraphs.map((parts) => (
+          <p data-about-item data-reveal class="text-[15px] leading-[1.75] text-muted lg:text-lg">
+            {parts.map((p) => ('bold' in p && p.bold ? <b class="font-bold text-ink">{p.text}</b> : p.text))}
+          </p>
+        ))
+      }
+      <ul class="mt-2 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+        {
+          about.pills.map((pill) => (
+            <li data-about-pill data-reveal class="inline-flex items-center gap-2 rounded-full bg-sand px-4 py-2 text-sm">
+              {pill.icon === 'pin' && (
+                <svg width="12" height="16" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 0C2.7 0 0 2.6 0 5.9 0 10.3 6 16 6 16s6-5.7 6-10.1C12 2.6 9.3 0 6 0Z" fill="#b5694a" /><circle cx="6" cy="6" r="2.2" fill="#fbf8f2" /></svg>
+              )}
+              {pill.icon === 'es' && (
+                <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#c60b1e" /><rect y="3.5" width="20" height="7" fill="#ffc400" /></svg>
+              )}
+              {pill.icon === 'gl' && (
+                <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect x=".5" y=".5" width="19" height="13" rx="2" fill="#fff" stroke="#ddd3c2" /><path d="M1 1 L19 13" stroke="#0099cc" stroke-width="3" /></svg>
+              )}
+              {pill.icon === 'en' && (
+                <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><rect width="20" height="14" rx="2" fill="#012169" /><path d="M0 0L20 14M20 0L0 14" stroke="#fff" stroke-width="3" /><path d="M0 0L20 14M20 0L0 14" stroke="#c8102e" stroke-width="1.2" /><path d="M10 0V14M0 7H20" stroke="#fff" stroke-width="4" /><path d="M10 0V14M0 7H20" stroke="#c8102e" stroke-width="2.2" /></svg>
+              )}
+              {pill.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <!-- Hoja suelta que cae hacia la sección siguiente -->
+  <Deco pieza="falling" class="right-[8%] -bottom-6 z-[6] w-[24px] md:w-[30px] lg:right-[12%] lg:w-[38px]" />
+</section>
+
+<script>
+  // Animaciones de "Sobre mí" (Motion). Se activan una sola vez, al llegar a la sección.
+  import { animate, stagger, inView, reducedMotion, easeOut } from '../scripts/motion';
+
+  const section = document.getElementById('sobre-mi')!;
+  const $ = <T extends Element = HTMLElement>(sel: string) => [...section.querySelectorAll<T>(sel)];
+
+  if (!reducedMotion()) {
+    inView(
+      section,
+      () => {
+        // Título: sube, la ramita se "planta" con un giro y la línea curva se dibuja
+        animate($('[data-title]'), { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, ease: easeOut });
+        animate($('[data-title-sprig]'), { opacity: [0, 1], rotate: [-25, 0], scale: [0.6, 1] }, { type: 'spring', bounce: 0.45, delay: 0.35 });
+        animate($('[data-draw]'), { strokeDashoffset: [1, 0] }, { duration: 1, ease: 'easeInOut', delay: 0.3 });
+
+        // Ilustración: aparece y después sus puntos flotan
+        // (las ramas y hojas de toda la página las anima scripts/deco.ts)
+        animate($('[data-about-art]'), { opacity: [0, 1], scale: [0.92, 1], y: [30, 0] }, { duration: 0.9, ease: easeOut, delay: 0.2 });
+        $<SVGCircleElement>('[data-about-dot]').forEach((c, i) => {
+          animate(c, { y: [0, i % 2 ? 6 : -6, 0] }, { duration: 3 + (i % 3), ease: 'easeInOut', repeat: Infinity, delay: i * 0.25 });
+        });
+
+        // Texto en cascada y etiquetas que aparecen con un pequeño rebote
+        animate($('[data-about-item]'), { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, ease: easeOut, delay: stagger(0.1, { startDelay: 0.35 }) });
+        animate($('[data-about-pill]'), { opacity: [0, 1], scale: [0.8, 1] }, { type: 'spring', bounce: 0.4, delay: stagger(0.08, { startDelay: 0.9 }) });
+      },
+      { amount: 0.2 },
+    );
+  }
+</script>

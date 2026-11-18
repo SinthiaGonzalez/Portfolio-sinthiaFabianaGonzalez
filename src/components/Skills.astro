@@ -1,0 +1,47 @@
+---
+import { skills } from '../data/content';
+import SectionTitle from './SectionTitle.astro';
+import Decor from './Decor.astro';
+import Deco from './Deco.astro';
+
+// Carga todos los iconos de src/assets/skills como URLs
+const icons = import.meta.glob<{ default: { src: string } }>('../assets/skills/*.svg', { eager: true });
+const iconUrl = (name: string) => icons[`../assets/skills/${name}.svg`]?.default.src;
+
+// Colores de tarjeta que se alternan, como en el diseño
+const cardColors = ['bg-card', 'bg-sand-dark', 'bg-[#e4e8da]'];
+---
+
+<section id="habilidades" class="relative bg-sand px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Decor waves blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
+  <Deco pieza="fallen" class="top-16 right-[10%] w-[24px] md:w-[30px] lg:top-24 lg:right-[16%] lg:w-[38px]" />
+  <SectionTitle title={skills.title} />
+
+  <ul class="relative z-[2] mx-auto flex max-w-[1140px] flex-wrap justify-center gap-3 md:gap-6">
+    {
+      skills.main.map((skill, i) => (
+        <li class:list={['flex size-[100px] flex-col items-center justify-center gap-2 rounded-[18px] border border-line md:h-[136px] md:w-[150px] md:gap-3.5 md:rounded-2xl lg:h-[150px] lg:w-[170px]', cardColors[i % 3]]}>
+          <img src={iconUrl(skill.icon)} alt="" width="56" height="56" loading="lazy" class="size-[38px] md:size-14" />
+          <span class="text-xs font-medium md:text-base">{skill.name}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="relative z-[2] mt-11 text-center">
+    <h3 class="mb-[18px] font-serif text-[26px]">{skills.moreTitle}</h3>
+    <ul class="flex flex-wrap justify-center gap-2.5">
+      {
+        skills.more.map((item) => (
+          <li class="flex items-center gap-2 rounded-full border border-line bg-sand-dark px-3 py-[7px] text-[13px] md:px-[18px] md:py-[9px] md:text-[15px]">
+            <i class="block size-2 rounded-full bg-terra" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- Rama terracota que cruza hacia Formación -->
+  <Deco pieza="terracota" class="-bottom-16 -left-3 z-[6] w-[80px] md:-bottom-24 md:w-[110px] lg:-bottom-32 lg:-left-4 lg:w-[160px]" />
+</section>

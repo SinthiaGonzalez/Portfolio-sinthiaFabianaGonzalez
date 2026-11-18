@@ -1,0 +1,93 @@
+---
+import { hero, site } from '../data/content';
+import HeroVisual from './HeroVisual.astro';
+import Icon from './Icon.astro';
+import Deco from './Deco.astro';
+
+const socials = [
+  { name: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },
+  { name: 'github', href: site.social.github, label: 'GitHub' },
+  { name: 'mail', href: `mailto:${site.email}`, label: 'Email' },
+] as const;
+---
+
+<section id="inicio" class="relative flex flex-col items-center gap-6 px-6 pb-16 text-center md:px-10 md:pb-20 lg:min-h-[680px] lg:flex-row lg:justify-between lg:gap-8 lg:pt-[30px] lg:pr-[60px] lg:pb-[110px] lg:pl-[140px] lg:text-left xl:pr-[120px] xl:pl-[160px]">
+  <!-- Hojas que caen por la sección (aparecen arriba, caen, se desvanecen y vuelven a caer) -->
+  <Deco pieza="maple" cae class="top-6 left-[48%] z-[1] w-[26px] md:w-[34px]" />
+  <!-- Esta pasa por DETRÁS de la ilustración: nace escondida tras el avatar y aparece al caer -->
+  <Deco pieza="falling" cae class="top-0 right-[6%] z-0 w-[24px] md:w-[30px]" />
+  <Deco pieza="fallen" cae class="top-10 left-[7%] z-[1] w-[22px] md:w-[28px]" />
+
+  <!-- Redes en el lateral (escritorio) -->
+  <div data-hero-side data-reveal class="absolute top-[250px] left-14 z-[3] hidden flex-col gap-3.5 after:mx-auto after:mt-1.5 after:block after:h-20 after:w-0.5 after:bg-sage after:content-[''] lg:flex">
+    {
+      socials.map((s) => (
+        <a href={s.href} target={s.name === 'mail' ? undefined : '_blank'} rel="noopener" aria-label={s.label} class="flex size-10 items-center justify-center rounded-full bg-sand text-olive-dark transition hover:-translate-y-0.5">
+          <Icon name={s.name} />
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="relative z-[2] flex w-full flex-col items-center lg:w-[600px] lg:shrink-0 lg:items-start">
+    <p data-hero-item data-reveal class="font-serif text-2xl lg:text-[34px]">{hero.greeting}</p>
+    <h1 data-hero-item data-reveal class="font-serif text-[42px] leading-[1.02] md:text-6xl xl:text-[84px]">{site.name}</h1>
+    <p data-hero-item data-reveal class="my-3 text-sm font-semibold tracking-[2px] text-olive uppercase md:my-[18px] md:text-xl md:tracking-[3px]">{site.role}</p>
+    <p data-hero-item data-reveal class="mb-6 w-full text-[15px] leading-relaxed text-muted md:mb-[34px] md:text-lg lg:w-[520px]">{hero.intro}</p>
+    <div data-hero-item data-reveal class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
+      <a href={site.cvUrl} download class="inline-flex h-[46px] items-center justify-center gap-2 rounded-full border-[1.5px] border-olive px-8 text-[15px] font-medium text-olive-dark transition hover:bg-olive hover:text-white md:h-[50px] md:text-base">
+        {hero.downloadCv}
+      </a>
+      <a href="#contacto" class="inline-flex h-[46px] items-center justify-center rounded-full bg-olive px-8 text-[15px] font-medium text-white transition hover:bg-olive-dark md:h-[50px] md:text-base">
+        {hero.contact}
+      </a>
+    </div>
+    <!-- Redes en fila (móvil y tablet) -->
+    <div data-hero-item data-reveal class="mt-7 flex gap-3 lg:hidden">
+      {
+        socials.map((s) => (
+          <a href={s.href} target={s.name === 'mail' ? undefined : '_blank'} rel="noopener" aria-label={s.label} class="flex size-10 items-center justify-center rounded-full bg-sand text-olive-dark">
+            <Icon name={s.name} />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="relative z-[1] order-first size-[335px] [--hero-scale:0.62] sm:size-[405px] sm:[--hero-scale:0.75] lg:order-none xl:size-[540px] xl:[--hero-scale:1]">
+    <HeroVisual />
+  </div>
+</section>
+
+<script>
+  import { animate, stagger, reducedMotion, easeOut } from '../scripts/motion';
+  // Animaciones del Inicio (Motion). Con "reducir movimiento" activado no se ejecuta nada
+  // y todo se ve directamente en su sitio.
+
+  if (!reducedMotion()) {
+    const all = <T extends Element = HTMLElement>(sel: string) => [...document.querySelectorAll<T>(sel)];
+
+    // 1. Entrada: el texto sube y aparece en cascada
+    animate(all('[data-hero-item]'), { opacity: [0, 1], y: [24, 0] }, { duration: 0.8, ease: easeOut, delay: stagger(0.09, { startDelay: 0.15 }) });
+    animate(all('[data-hero-side]'), { opacity: [0, 1], x: [-16, 0] }, { duration: 0.8, ease: easeOut, delay: 0.7 });
+
+    // 2. Entrada de la ilustración: mancha, avatar, línea curva, punto y ventanas
+    animate(all('[data-hero="avatar"]'), { opacity: [0, 1], y: [24, 0] }, { duration: 0.9, ease: easeOut, delay: 0.25 });
+    animate(all('[data-hero="curve"]'), { strokeDashoffset: [1, 0] }, { duration: 1.4, ease: 'easeInOut', delay: 0.5 });
+    animate(all('[data-hero="dot"]'), { opacity: [0, 1], scale: [0, 1] }, { type: 'spring', bounce: 0.5, delay: 1.7 });
+
+    // 3. Movimiento continuo y suave. Empieza cuando termina la entrada de cada pieza
+    //    (si no, las dos animaciones se pisan) y cada una va a su ritmo para que no se vea mecánico.
+    all('[data-hero="blob"]').forEach((el) => {
+      animate(el, { opacity: [0, 1], scale: [0.85, 1] }, { duration: 1, ease: easeOut }).then(() =>
+        animate(el, { rotate: [0, 4, -2, 0] }, { duration: 14, ease: 'easeInOut', repeat: Infinity }),
+      );
+    });
+    all('[data-hero="win"]').forEach((el, i) => {
+      animate(el, { opacity: [0, 1], scale: [0.8, 1] }, { duration: 0.6, ease: easeOut, delay: 0.6 + i * 0.15 }).then(() =>
+        animate(el, { y: [0, i % 2 ? 10 : -10, 0] }, { duration: 4.5 + i * 0.8, ease: 'easeInOut', repeat: Infinity }),
+      );
+    });
+    // (las ramas del inicio las anima scripts/deco.ts, como el resto de la decoración)
+  }
+</script>

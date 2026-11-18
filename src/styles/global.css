@@ -3,12 +3,15 @@
 @import "@fontsource/dm-sans/600.css";
 @import "@fontsource/dm-sans/700.css";
 @import "@fontsource/dm-serif-display/400.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/800.css";
 @import "tailwindcss";
 
 /* Tokens del diseño en Figma ("Portfolio Sinthia" → Portfolio v2) */
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "DM Serif Display", Georgia, serif;
+  --font-logo: "Poppins", ui-sans-serif, sans-serif; /* logos de ceac y Henry */
 
   --color-cream: #f5f0ea; /* fondo de sección */
   --color-sand: #eae0d5; /* fondo de sección alterno */
@@ -44,6 +47,55 @@
   body {
     @apply bg-cream font-sans text-ink antialiased;
   }
+}
+
+/* Animaciones con Motion (src/scripts/motion.ts).
+   [data-reveal] = empieza oculto y entra con animación. Solo se oculta si hay JS
+   y la persona no ha pedido reducir el movimiento, así nunca queda contenido invisible. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+  }
+  .js [data-hero='curve'],
+  .js [data-draw] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .js [data-planta] .hoja {
+    opacity: 0;
+  }
+  .js [data-planta] [data-tallo-relleno] {
+    clip-path: inset(100% 0% 0% 0%);
+  }
+  .js [data-deco] {
+    opacity: 0;
+  }
+}
+
+/* Planta: las hojas se abren y se mecen desde el punto donde nacen (coordenadas del dibujo) */
+[data-planta] .hoja,
+[data-planta-cuerpo] {
+  transform-box: view-box;
+}
+
+/* Ramas de acento: se balancean desde su base; hojas sueltas: desde su centro */
+[data-deco='sway'] {
+  transform-origin: 50% 100%;
+}
+[data-deco='float'],
+[data-deco='fall'] {
+  transform-origin: 50% 50%;
+}
+[data-about-dot] {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+/* Las piezas SVG giran/escalan desde su propia caja, no desde el origen del lienzo */
+[data-hero='blob'],
+[data-hero='dot'] {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 @media (prefers-reduced-motion: reduce) {

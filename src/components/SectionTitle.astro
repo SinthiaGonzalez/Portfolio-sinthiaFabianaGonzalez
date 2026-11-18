@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  /** Variante de "Sobre mí": ramita junto al título y línea curva debajo. */
+  sprig?: boolean;
+  /** Marca el título para animarlo (lo anima el script de cada sección). */
+  animate?: boolean;
+  class?: string;
+}
+const { title, sprig = false, animate = false, class: className } = Astro.props;
+// Ramita junto al título: el olivo con frutos de la decoración
+import Sprig from '../assets/deco/piezas/rama-olivo-frutos.svg';
+---
+
+<div class:list={['relative z-[2] mb-9 text-center md:mb-14', className]}>
+  <h2 class="font-serif text-4xl leading-tight md:text-[42px] lg:text-[52px]">
+    <span data-title={animate || undefined} data-reveal={animate || undefined} class="inline-block">{title}</span>
+    {sprig && (
+      <span data-title-sprig={animate || undefined} data-reveal={animate || undefined} class="ml-1.5 inline-block origin-bottom-left align-top">
+        <Sprig class="h-auto w-[48px] -scale-x-100 lg:w-[64px]" aria-hidden="true" />
+      </span>
+    )}
+  </h2>
+  {
+    sprig ? (
+      <svg class="mx-auto mt-2.5 block" width="220" height="16" viewBox="0 0 220 16" aria-hidden="true">
+        <path data-draw={animate || undefined} pathLength="1" d="M6 11 C50 3 96 4 120 7 C150 10 180 12 214 6" fill="none" stroke="#B47A57" stroke-width="3" stroke-linecap="round" />
+      </svg>
+    ) : (
+      <div data-title-bar={animate || undefined} data-reveal={animate || undefined} class="mx-auto mt-3.5 h-1 w-16 rounded-sm bg-terra" />
+    )
+  }
+</div>

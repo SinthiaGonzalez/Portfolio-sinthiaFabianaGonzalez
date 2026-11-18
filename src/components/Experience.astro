@@ -1,0 +1,39 @@
+---
+import { experience } from '../data/content';
+import SectionTitle from './SectionTitle.astro';
+import Deco from './Deco.astro';
+---
+
+<section id="experiencia" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Deco pieza="maple" class="top-10 left-[8%] w-[26px] md:w-[34px] lg:top-16 lg:left-[14%] lg:w-[42px]" />
+  <SectionTitle title={experience.title} />
+
+  {
+    experience.jobs.map((job) => (
+      <article class="relative z-[2] mx-auto flex max-w-[1000px] flex-col gap-[22px] rounded-2xl border border-line bg-card p-6 md:flex-row md:gap-7 md:p-8 lg:gap-12 lg:p-11">
+        <div class="flex shrink-0 flex-col items-start gap-2.5 md:w-[180px] lg:w-[230px]">
+          <span class="rounded-full bg-sand px-3.5 py-1.5 text-[13px] font-semibold text-terra">{job.date}</span>
+          <h3 class="font-serif text-[28px] leading-[1.1] text-olive-dark lg:text-[34px]">{job.company}</h3>
+          <p class="text-sm font-medium text-muted">{job.type}</p>
+        </div>
+        <div class="flex-1">
+          <p class="mb-[18px] text-lg font-semibold text-terra md:text-[19px] lg:text-[22px]">{job.role}</p>
+          <ul class="flex flex-col gap-2.5 text-[15px] leading-relaxed text-muted lg:text-base">
+            {job.tasks.map((task) => (
+              <li class="relative pl-5 before:absolute before:top-[0.65em] before:left-0 before:size-[7px] before:rounded-full before:bg-sage before:content-['']">
+                {task}
+              </li>
+            ))}
+          </ul>
+          <ul class="mt-[18px] flex flex-wrap gap-1.5" aria-label="Tecnologías">
+            {job.tags.map((tag) => (
+              <li class="rounded-full bg-sand px-2.5 py-1 text-xs">{tag}</li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    ))
+  }
+  <!-- Olivo con frutos que cruza hacia Habilidades -->
+  <Deco pieza="frutos" class="-right-3 -bottom-14 z-[6] w-[90px] md:-bottom-20 md:w-[120px] lg:-right-4 lg:-bottom-24 lg:w-[170px]" />
+</section>

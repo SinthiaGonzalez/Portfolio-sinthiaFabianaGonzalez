@@ -1,0 +1,80 @@
+---
+import { projects } from '../data/content';
+import SectionTitle from './SectionTitle.astro';
+import Decor from './Decor.astro';
+import Icon from './Icon.astro';
+import Deco from './Deco.astro';
+
+const shotColors: Record<string, string> = {
+  hotel: 'bg-[#cdbba8]',
+  sushi: 'bg-[#e3b9a0]',
+  portfolio: 'bg-[#c8cfb4]',
+};
+const btn =
+  'inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold tracking-[1px] transition';
+---
+
+<section id="proyectos" class="relative bg-sand px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Decor waves blobs={{ left: { color: '#D5C3B0', top: '12%' }, right: { color: '#B47A57', top: '48%' } }} />
+  <Deco pieza="maple" class="top-16 right-[9%] w-[26px] md:w-[34px] lg:top-24 lg:right-[15%] lg:w-[42px]" />
+  <SectionTitle title={projects.title} />
+
+  <ul class="relative z-[2] flex flex-col gap-5 md:gap-7 lg:flex-row">
+    {
+      projects.items.map((p) => (
+        <li class="flex flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-card">
+          <div class:list={['relative flex h-[220px] items-center justify-center', shotColors[p.color]]} aria-hidden="true">
+            {p.status && (
+              <span class:list={['absolute top-4 right-4 rounded-full px-3 py-[5px] text-[11px] font-semibold tracking-[1px] text-white uppercase', p.status === 'live' ? 'bg-olive' : 'bg-terra']}>
+                {p.statusLabel}
+              </span>
+            )}
+            <div class="h-40 w-4/5 overflow-hidden rounded-xl bg-[#fbf8f2] shadow-[0_12px_30px_rgba(60,50,30,0.15)]">
+              <div class="flex h-[22px] items-center gap-[5px] bg-sand px-2.5">
+                <i class="block size-[7px] rounded-full bg-sage" />
+                <i class="block size-[7px] rounded-full bg-sage" />
+                <i class="block size-[7px] rounded-full bg-sage" />
+              </div>
+              <div class="flex flex-col gap-2 p-3.5">
+                <span class="font-serif text-lg">{p.mockTitle ?? p.name}</span>
+                <i class="block h-2 w-[85%] rounded bg-[#ddd3c2]" />
+                <i class="block h-2 w-[60%] rounded bg-[#ddd3c2]" />
+                <span class="mt-1.5 flex gap-2">
+                  <i class="block h-11 flex-1 rounded-md bg-sand" />
+                  <i class="block h-11 flex-1 rounded-md bg-sand" />
+                  <i class="block h-11 flex-1 rounded-md bg-sand" />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-1 px-7 pt-[26px] pb-2">
+            <h3 class="mb-2.5 font-serif text-2xl lg:text-[28px]">{p.name}</h3>
+            <p class="text-[15px] leading-relaxed text-muted">{p.description}</p>
+            <ul class="mt-3.5 flex flex-wrap gap-1.5" aria-label="Tecnologías">
+              {p.tags.map((tag) => (
+                <li class="rounded-full bg-sand px-2.5 py-1 text-xs">{tag}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="flex gap-3 px-7 pt-5 pb-7">
+            {p.demo ? (
+              <a href={p.demo} target="_blank" rel="noopener" class={`${btn} bg-olive-button text-white hover:bg-olive-dark`}>
+                <Icon name="eye" size={16} /> DEMO
+              </a>
+            ) : (
+              <span class={`${btn} cursor-default border-[1.5px] border-olive-button text-olive-button opacity-70`}>PRONTO</span>
+            )}
+            <a href={p.repo} target="_blank" rel="noopener" class={`${btn} border-[1.5px] border-olive-button text-olive-button hover:bg-olive-button hover:text-white`}>
+              <Icon name="github" /> REPO
+            </a>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+
+  <!-- Laurel que cruza hacia Contacto -->
+  <Deco pieza="laurel" id="rama-proyectos-laurel" class="-bottom-20 -left-2 z-[6] w-[60px] rotate-12 md:-bottom-28 md:w-[85px] lg:-bottom-36 lg:-left-3 lg:w-[115px]" />
+</section>

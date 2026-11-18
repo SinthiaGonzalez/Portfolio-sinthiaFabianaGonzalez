@@ -1,0 +1,66 @@
+---
+import { contact, site } from '../data/content';
+import SectionTitle from './SectionTitle.astro';
+import Decor from './Decor.astro';
+import Icon from './Icon.astro';
+import Deco from './Deco.astro';
+
+const field =
+  'w-full rounded-[14px] border border-[#ddd3c2] bg-cream px-5 text-[15px] text-ink placeholder:text-[#9a948a] focus:border-olive focus:ring-2 focus:ring-olive/20 focus:outline-none';
+---
+
+<section id="contacto" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Decor blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
+  <SectionTitle title={contact.title} />
+
+  <div class="relative z-[2] mx-auto w-full max-w-[760px]">
+    <!-- Ramas abrazando el formulario: olivo arriba a la izquierda, terracota abajo a la derecha -->
+    <Deco pieza="olivo" id="rama-contacto-olivo" flip class="-top-16 -left-3 z-[1] w-[70px] -rotate-12 md:-top-20 md:-left-16 md:w-[150px]" />
+    <Deco pieza="terracota" class="-right-8 -bottom-10 z-[1] w-[80px] rotate-[160deg] md:-right-16 md:-bottom-16 md:w-[130px]" />
+    <Deco pieza="fallen" class="-top-4 right-[6%] z-[3] w-[24px] md:-top-6 md:w-[32px]" />
+    <Deco pieza="falling" class="bottom-[18%] -left-5 z-[3] w-[22px] md:-left-9 md:w-[30px]" />
+
+    <form id="contact-form" class="relative z-[2] flex flex-col gap-4 rounded-3xl border border-line bg-card px-5 py-7 md:px-14 md:py-12" novalidate>
+      <p class="mb-2.5 text-center text-[15px] leading-relaxed text-muted md:text-lg">{contact.intro}</p>
+      <label class="sr-only" for="cf-name">{contact.fields.name}</label>
+      <input id="cf-name" name="name" required autocomplete="name" placeholder={contact.fields.name} class={`${field} h-[54px]`} />
+      <label class="sr-only" for="cf-email">{contact.fields.email}</label>
+      <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder={contact.fields.email} class={`${field} h-[54px]`} />
+      <label class="sr-only" for="cf-subject">{contact.fields.subject}</label>
+      <input id="cf-subject" name="subject" placeholder={contact.fields.subject} class={`${field} h-[54px]`} />
+      <label class="sr-only" for="cf-message">{contact.fields.message}</label>
+      <textarea id="cf-message" name="message" required rows="5" placeholder={contact.fields.message} class={`${field} h-[150px] resize-y py-4`}></textarea>
+      <p id="cf-error" class="hidden text-center text-sm text-terra" role="alert"></p>
+      <div class="mt-2 flex justify-center">
+        <button type="submit" class="inline-flex h-[46px] items-center justify-center rounded-full bg-olive px-14 text-[15px] font-medium text-white transition hover:bg-olive-dark md:h-[50px] md:text-base">
+          {contact.send}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="relative z-[2] mt-7 flex flex-col items-center gap-3 text-[15px] text-muted md:flex-row md:justify-center md:gap-7">
+    <a href={`mailto:${site.email}`} class="flex items-center gap-2 hover:text-olive-dark"><Icon name="mail" size={16} class="text-olive-dark" /> {site.email}</a>
+    <span class="flex items-center gap-2"><Icon name="pin" size={16} class="text-olive-dark" /> {site.location}</span>
+  </div>
+</section>
+
+<script define:vars={{ email: site.email }}>
+  // De momento el formulario abre el correo del visitante con el mensaje ya escrito.
+  // TODO: sustituir por un envío real (Worker de Cloudflare + Resend).
+  const form = document.getElementById('contact-form');
+  const error = document.getElementById('cf-error');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    if (!form.checkValidity()) {
+      error.textContent = 'Rellena tu nombre, un e-mail válido y el mensaje.';
+      error.classList.remove('hidden');
+      return;
+    }
+    error.classList.add('hidden');
+    const subject = data.get('subject') || `Contacto desde el portfolio: ${data.get('name')}`;
+    const body = `${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`;
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>

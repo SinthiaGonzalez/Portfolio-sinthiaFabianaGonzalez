@@ -1,0 +1,24 @@
+---
+// Ilustración del inicio (exportada del diseño). TODO: animar las ventanas y ramas con Motion.
+import avatar from '../assets/avatar-hero.png';
+import RamaLaurel from './RamaLaurel.astro';
+import RamaOlivo from './RamaOlivo.astro';
+---
+
+<div class="absolute top-0 left-0 size-[540px] origin-top-left scale-(--hero-scale)" aria-hidden="true">
+<svg class="absolute inset-0 overflow-visible" width="540" height="540" viewBox="0 0 540 540" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs><clipPath id="hero-clip"><path d="M30 0 H510 V215 C500 320 465 430 380 485 C320 525 205 530 140 488 C70 440 50 345 62 250 L30 215 Z"/></clipPath></defs>
+ <path d="M270 40 C380 25 480 100 490 215 C500 320 465 430 380 485 C320 525 205 530 140 488 C70 440 50 345 62 250 C76 140 160 55 270 40Z" fill="#dcc8ab" data-hero="blob" data-reveal/>
+ <!-- Ramas: el arranque del tallo queda escondido detrás de cada hombro del avatar y el resto sale por fuera del círculo -->
+ <g>
+  <g transform="rotate(-38 165 470)"><RamaLaurel id="rama-hero-laurel" x="97" y="176" width="150" height="300" /></g>
+  <g transform="translate(940 0) scale(-1 1)"><g transform="rotate(-22 555 380)"><RamaOlivo id="rama-hero-olivo" x="410" y="127" width="160" height="259" /></g></g>
+ </g>
+ <path data-hero="curve" pathLength="1" d="M60 210 C70 120 150 60 240 50" fill="none" stroke="#c9b49a" stroke-width="2"/>
+ <circle data-hero="dot" data-reveal cx="236" cy="34" r="6" fill="#b5694a"/>
+ 
+ 
+ <g clip-path="url(#hero-clip)" data-hero="avatar" data-reveal><image href={avatar.src} x="70" y="38" width="400" height="535" preserveAspectRatio="xMidYMin meet"/></g>
+</svg>
+<div data-hero="win" data-reveal style="position:absolute;left:10px;top:175px;width:150px;border-radius:6px;overflow:hidden;background:#5f6c48;box-shadow:0 8px 20px rgba(60,50,30,.18)"><div style="display:flex;gap:4px;padding:6px 8px;background:#4f5b36"><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i></div><div style="padding:10px;display:flex;flex-direction:column;gap:6px"><div style="height:5px;width:30%;border-radius:3px;background:#c9a27a"></div><div style="height:5px;width:70%;border-radius:3px;background:#a9b28f"></div><div style="height:5px;width:55%;border-radius:3px;background:#e9dfcf"></div><div style="height:5px;width:80%;border-radius:3px;background:#a9b28f"></div><div style="height:5px;width:40%;border-radius:3px;background:#c9a27a"></div></div></div><div data-hero="win" data-reveal style="position:absolute;left:395px;top:40px;width:78px;border-radius:5px;overflow:hidden;background:#fbf8f2;border:1.5px solid #8a7a66"><div style="display:flex;gap:4px;padding:6px 8px;background:#6b7a4b"><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i></div><div style="text-align:center;padding:6px 0 8px;font-family:DM Sans,sans-serif;font-size:18px;color:#4f5b36">&lt;/&gt;</div></div><div data-hero="win" data-reveal style="position:absolute;left:440px;top:110px;width:86px;border-radius:5px;overflow:hidden;background:#f1e7d8;border:1.5px solid #8a7a66"><div style="display:flex;gap:4px;padding:6px 8px;background:#b5694a"><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i><i style="width:5px;height:5px;border-radius:50%;background:#fbf8f2;display:block"></i></div><div style="display:flex;justify-content:center;padding:8px 0"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6b675e" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div></div><svg data-hero="win" data-reveal style="position:absolute;left:345px;top:400px" width="160" height="130" viewBox="0 0 160 130"><path fill="#b5694a" d="M85 5 C130 0 158 32 155 70 C152 108 115 128 75 125 C35 122 5 98 5 64 C5 28 40 9 85 5Z"/><text x="80" y="78" text-anchor="middle" font-family="DM Sans" font-weight="500" font-size="30" fill="#f5e6d8">&lt;/&gt;</text></svg>
+</div>

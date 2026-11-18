@@ -1,0 +1,36 @@
+---
+// Fondos decorativos de las secciones: ondas (bordes ondulados) y manchas laterales.
+interface Props {
+  waves?: boolean;
+  /** Manchas laterales: color y posición vertical (en %). */
+  blobs?: { left: { color: string; top: string }; right: { color: string; top: string } };
+}
+const { waves = false, blobs } = Astro.props;
+const blobPath =
+  'M120 10 C190 0 250 60 240 140 C232 210 170 250 110 236 C46 222 4 170 10 108 C15 52 60 18 120 10Z';
+---
+
+{
+  waves && (
+    <>
+      <svg class="pointer-events-none absolute -top-px left-0 z-[1] h-11 w-full lg:h-[70px]" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 0 H1440 V32 C1181 70 893 10 605 38 C360 63 144 24 0 42 Z" fill="#F5F0EA" />
+      </svg>
+      <svg class="pointer-events-none absolute -bottom-px left-0 z-[1] h-11 w-full lg:h-[70px]" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 70 H1440 V35 C1224 7 950 56 648 28 C403 4 173 49 0 24 Z" fill="#F5F0EA" />
+      </svg>
+    </>
+  )
+}
+{
+  blobs && (
+    <>
+      <svg class="pointer-events-none absolute -left-14 z-0 size-[125px] md:-left-21 md:size-[188px] lg:-left-28 lg:size-[250px]" style={`top:${blobs.left.top}`} viewBox="0 0 250 250" aria-hidden="true">
+        <path d={blobPath} fill={blobs.left.color} opacity=".2" />
+      </svg>
+      <svg class="pointer-events-none absolute -right-13 z-0 size-[125px] md:-right-20 md:size-[188px] lg:-right-26 lg:size-[250px]" style={`top:${blobs.right.top}`} viewBox="0 0 250 250" aria-hidden="true">
+        <path d={blobPath} fill={blobs.right.color} opacity=".2" />
+      </svg>
+    </>
+  )
+}

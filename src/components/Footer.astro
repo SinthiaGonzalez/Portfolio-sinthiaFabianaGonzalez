@@ -1,0 +1,31 @@
+---
+import { footer, site } from '../data/content';
+import Icon from './Icon.astro';
+
+const socials = [
+  { name: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },
+  { name: 'github', href: site.social.github, label: 'GitHub' },
+  { name: 'mail', href: `mailto:${site.email}`, label: 'Email' },
+] as const;
+---
+
+<footer class="relative flex flex-col items-center gap-[18px] bg-olive-dark px-6 py-10 text-[#e9e6dc] lg:px-[120px]">
+  <a href="#inicio" class="absolute -top-7 right-6 flex size-14 items-center justify-center rounded-full bg-terra text-white shadow-[0_8px_20px_rgba(0,0,0,0.15)] transition hover:-translate-y-0.5 lg:right-12" aria-label="Volver arriba">
+    <Icon name="chevron-up" size={22} />
+  </a>
+  <div class="flex gap-3.5">
+    {
+      socials.map((s) => (
+        <a href={s.href} target={s.name === 'mail' ? undefined : '_blank'} rel="noopener" aria-label={s.label} class="flex size-10 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20">
+          <Icon name={s.name} />
+        </a>
+      ))
+    }
+  </div>
+  <p class="flex flex-wrap items-center justify-center gap-1.5 text-center text-sm">
+    <span>{footer.madeWith}</span>
+    <Icon name="heart" size={14} class="text-[#e7a58b]" />
+    <span>{footer.by}</span>
+    <b class="font-semibold text-white">{site.name}</b>
+  </p>
+</footer>

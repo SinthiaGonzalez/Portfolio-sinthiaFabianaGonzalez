@@ -1,0 +1,71 @@
+---
+import { education } from '../data/content';
+import SectionTitle from './SectionTitle.astro';
+import Decor from './Decor.astro';
+import Deco from './Deco.astro';
+---
+
+<section id="formacion" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+  <Decor blobs={{ left: { color: '#5D6C52', top: '30%' }, right: { color: '#D5C3B0', top: '62%' } }} />
+  <SectionTitle title={education.title} />
+
+  <div class="relative z-[2]">
+    <!-- Laurel y olivo asomando detrás de las tarjetas -->
+    <Deco pieza="laurel" id="rama-formacion-laurel" class="top-0 -left-[40px] z-[1] hidden w-[100px] -rotate-12 md:block lg:-left-[50px] lg:w-[130px]" />
+    <Deco pieza="olivo" id="rama-formacion-olivo" class="-right-[40px] bottom-0 z-[1] hidden w-[120px] rotate-6 md:block lg:-right-[50px] lg:w-[160px]" />
+
+    <ul class="relative z-[2] flex flex-wrap justify-center gap-6">
+      {
+        education.items.map((item) => (
+          <li class="flex w-full flex-col items-center gap-[18px] rounded-2xl border border-line bg-card px-6 pt-[34px] pb-[30px] text-center md:w-[330px] lg:w-[258px]">
+            <div class="flex h-[110px] w-full flex-col items-center justify-center gap-1 md:h-[130px]" aria-hidden="true">
+              {item.logo === 'ceac' && (
+                <>
+                  <span class="font-logo text-[58px] leading-none font-extrabold tracking-[-2px] text-olive-dark">ceac</span>
+                  <span class="text-xs font-semibold tracking-[4px] text-olive">FP OFICIAL</span>
+                </>
+              )}
+              {item.logo === 'arca' && (
+                <>
+                  <span class="text-xs font-semibold tracking-[5px] text-muted">ACADEMIA</span>
+                  <span class="font-serif text-[56px] leading-none text-terra">Arca</span>
+                  <span class="text-[11px] font-semibold tracking-[3px] text-muted">· SEPE ·</span>
+                </>
+              )}
+              {item.logo === 'henry' && (
+                <>
+                  <span class="flex items-center gap-2.5">
+                    <span class="flex size-[46px] items-center justify-center rounded-xl bg-[#f2d74e] font-logo text-[28px] font-extrabold text-ink">H</span>
+                    <span class="font-logo text-[44px] leading-none font-bold text-ink">henry</span>
+                  </span>
+                  <span class="mt-1.5 text-xs font-semibold tracking-[4px] text-muted">SOY HENRY</span>
+                </>
+              )}
+            </div>
+            <div class="flex flex-col items-center gap-1.5">
+              <h3 class="text-base leading-[1.35] font-medium text-terra md:text-lg">{item.title}</h3>
+              <p class="text-sm text-muted">{item.org}</p>
+              <p class="text-sm text-ink">{item.date}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="relative z-[2] mt-11 text-center">
+    <h3 class="mb-[18px] font-serif text-[26px]">{education.certsTitle}</h3>
+    <ul class="flex flex-wrap justify-center gap-2.5">
+      {
+        education.certs.map((cert) => (
+          <li class="flex items-center gap-2 rounded-full border border-line bg-sand-dark px-3 py-[7px] text-[13px] md:px-[18px] md:py-[9px] md:text-[15px]">
+            <i class="block size-2 shrink-0 rounded-full bg-olive" />
+            {cert}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <Deco pieza="falling" class="right-[10%] -bottom-5 z-[6] w-[24px] md:w-[30px] lg:right-[14%] lg:w-[38px]" />
+</section>

@@ -16,6 +16,8 @@ const {
 <html lang="es">
   <head>
     <meta charset="utf-8" />
+    <!-- Marca que hay JavaScript: solo entonces se ocultan los elementos que entran con animación -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -27,6 +29,13 @@ const {
     <meta property="og:type" content="website" />
   </head>
   <body>
-    <slot />
+    <!-- Las ramas decorativas salen por los lados: se recortan aquí para evitar el scroll horizontal -->
+    <div class="overflow-x-clip">
+      <slot />
+    </div>
+    <script>
+      // Animación de la decoración botánica de toda la página
+      import '../scripts/deco';
+    </script>
   </body>
 </html>
