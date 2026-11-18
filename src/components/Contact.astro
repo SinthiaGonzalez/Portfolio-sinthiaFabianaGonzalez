@@ -5,6 +5,7 @@ import Decor from './Decor.astro';
 import Icon from './Icon.astro';
 import Deco from './Deco.astro';
 
+const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(contact.whatsappMensaje)}`;
 const field =
   'w-full rounded-[14px] border border-[#ddd3c2] bg-cream px-5 text-[15px] text-ink placeholder:text-[#9a948a] focus:border-olive focus:ring-2 focus:ring-olive/20 focus:outline-none';
 ---
@@ -28,8 +29,24 @@ const field =
     <Deco pieza="olivo" id="rama-contacto-olivo" class="-top-[71px] -left-[33px] z-[1] w-[70px] md:-top-[197px] md:-left-[105px] md:w-[150px]" />
     <Deco pieza="olivo" id="rama-contacto-olivo-der" flip class="-top-[71px] -right-[33px] z-[1] w-[70px] md:-top-[197px] md:-right-[105px] md:w-[150px]" />
 
-    <form id="contact-form" class="relative z-[2] flex flex-col gap-4 rounded-3xl border border-line bg-card px-5 py-7 md:px-14 md:py-12" novalidate>
-      <p class="mb-2.5 text-center text-[15px] leading-relaxed text-muted md:text-lg">{contact.intro}</p>
+    <div class="relative z-[2] rounded-3xl border border-line bg-card px-5 py-7 md:px-14 md:py-12">
+      <p class="text-center text-[15px] leading-relaxed text-muted md:text-lg">{contact.intro}</p>
+
+      <!-- Contacto directo: WhatsApp (abre el chat con un saludo ya escrito) y correo -->
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a href={whatsappUrl} target="_blank" rel="noopener" class="inline-flex h-[50px] items-center justify-center gap-2.5 rounded-full bg-olive px-7 text-[15px] font-semibold text-white shadow-[0_6px_16px_rgba(79,91,54,0.22)] transition hover:-translate-y-0.5 hover:bg-olive-dark">
+          <Icon name="whatsapp" size={20} /> {contact.whatsapp}
+        </a>
+        <a href={`mailto:${site.email}`} class="inline-flex h-[50px] items-center justify-center gap-2.5 rounded-full border-[1.5px] border-olive px-7 text-[15px] font-semibold text-olive-dark transition hover:-translate-y-0.5 hover:bg-olive hover:text-white">
+          <Icon name="mail" size={18} /> {contact.correo}
+        </a>
+      </div>
+
+      <div class="my-7 flex items-center gap-4 text-sm text-muted" aria-hidden="true">
+        <span class="h-px flex-1 bg-line"></span>{contact.separador}<span class="h-px flex-1 bg-line"></span>
+      </div>
+
+    <form id="contact-form" class="flex flex-col gap-4" novalidate>
       <label class="sr-only" for="cf-name">{contact.fields.name}</label>
       <input id="cf-name" name="name" required autocomplete="name" placeholder={contact.fields.name} class={`${field} h-[54px]`} />
       <label class="sr-only" for="cf-email">{contact.fields.email}</label>
@@ -38,13 +55,19 @@ const field =
       <input id="cf-subject" name="subject" placeholder={contact.fields.subject} class={`${field} h-[54px]`} />
       <label class="sr-only" for="cf-message">{contact.fields.message}</label>
       <textarea id="cf-message" name="message" required rows="5" placeholder={contact.fields.message} class={`${field} h-[150px] resize-y py-4`}></textarea>
-      <p id="cf-error" class="hidden text-center text-sm text-terra" role="alert"></p>
+      <!-- Campo trampa contra bots: invisible para las personas -->
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label for="cf-web">No rellenes este campo</label>
+        <input id="cf-web" name="web" tabindex="-1" autocomplete="off" />
+      </div>
+      <p id="cf-estado" class="hidden rounded-xl px-4 py-3 text-center text-sm" role="status" aria-live="polite"></p>
       <div class="mt-2 flex justify-center">
-        <button type="submit" class="inline-flex h-[46px] items-center justify-center rounded-full bg-olive px-14 text-[15px] font-medium text-white transition hover:bg-olive-dark md:h-[50px] md:text-base">
+        <button id="cf-enviar" type="submit" class="inline-flex disabled:cursor-wait disabled:opacity-70 h-[46px] items-center justify-center rounded-full bg-olive px-14 text-[15px] font-medium text-white transition hover:bg-olive-dark md:h-[50px] md:text-base">
           {contact.send}
         </button>
       </div>
     </form>
+    </div>
   </div>
 
   <div class="relative z-[2] mt-7 flex flex-col items-center gap-3 text-[15px] text-muted md:flex-row md:justify-center md:gap-7">
@@ -53,22 +76,45 @@ const field =
   </div>
 </section>
 
-<script define:vars={{ email: site.email }}>
-  // De momento el formulario abre el correo del visitante con el mensaje ya escrito.
-  // TODO: sustituir por un envío real (Worker de Cloudflare + Resend).
+<script define:vars={{ whatsapp: whatsappUrl }}>
+  // Envía el formulario al Worker (/api/contacto), que reenvía el mensaje por email a Sinthia.
   const form = document.getElementById('contact-form');
-  const error = document.getElementById('cf-error');
-  form.addEventListener('submit', (e) => {
+  const estado = document.getElementById('cf-estado');
+  const boton = document.getElementById('cf-enviar');
+  const textoBoton = boton.textContent;
+
+  const mostrar = (texto, tipo) => {
+    estado.innerHTML = texto;
+    estado.className = `rounded-xl px-4 py-3 text-center text-sm ${tipo === 'ok' ? 'bg-[#e4e8da] text-olive-dark' : 'bg-[#f6e3da] text-terra'}`;
+  };
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const data = new FormData(form);
     if (!form.checkValidity()) {
-      error.textContent = 'Rellena tu nombre, un e-mail válido y el mensaje.';
-      error.classList.remove('hidden');
+      mostrar('Rellena tu nombre, un e-mail válido y el mensaje.', 'error');
       return;
     }
-    error.classList.add('hidden');
-    const subject = data.get('subject') || `Contacto desde el portfolio: ${data.get('name')}`;
-    const body = `${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`;
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    boton.disabled = true;
+    boton.textContent = 'Enviando…';
+    estado.className = 'hidden';
+    try {
+      const res = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const datos = await res.json().catch(() => ({}));
+      if (res.ok && datos.ok) {
+        form.reset();
+        mostrar('¡Mensaje enviado! 🌿 Gracias por escribirme, te responderé lo antes posible.', 'ok');
+      } else {
+        mostrar(`${datos.error ?? 'No se ha podido enviar el mensaje.'} También puedes <a class="font-semibold underline" href="${whatsapp}" target="_blank" rel="noopener">escribirme por WhatsApp</a>.`, 'error');
+      }
+    } catch {
+      mostrar(`No hay conexión ahora mismo. Inténtalo de nuevo o <a class="font-semibold underline" href="${whatsapp}" target="_blank" rel="noopener">escríbeme por WhatsApp</a>.`, 'error');
+    } finally {
+      boton.disabled = false;
+      boton.textContent = textoBoton;
+    }
   });
 </script>

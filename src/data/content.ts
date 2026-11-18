@@ -7,6 +7,8 @@ export const site = {
   role: 'Desarrolladora Web Full Stack',
   roleJunior: 'Desarrolladora Web Full Stack Junior',
   email: 'gonzalez.sinthia@icloud.com',
+  // WhatsApp: número en formato internacional sin '+' ni espacios (para wa.me)
+  whatsapp: '34744752815',
   location: 'Boiro, A Coruña',
   cvUrl: '/SinthiaGonzalez_CV_2026.pdf',
   social: {
@@ -155,7 +157,11 @@ export const projects = {
 
 export const contact = {
   title: 'Contacto',
-  intro: 'Completa el siguiente formulario y me pondré en contacto contigo lo antes posible.',
+  intro: 'Puedes escribirme por WhatsApp o por correo, o dejarme un mensaje aquí y te respondo lo antes posible.',
+  whatsapp: 'Escríbeme por WhatsApp',
+  whatsappMensaje: 'Hola Sinthia, he visto tu portfolio y me gustaría hablar contigo.',
+  correo: 'Envíame un correo',
+  separador: 'o déjame un mensaje',
   fields: { name: 'Nombre', email: 'E-mail', subject: 'Asunto', message: 'Mensaje' },
   send: 'Enviar',
 };
