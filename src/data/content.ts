@@ -161,6 +161,8 @@ export const contact = {
   whatsapp: 'Escríbeme por WhatsApp',
   whatsappMensaje: 'Hola Sinthia, he visto tu portfolio y me gustaría hablar contigo.',
   correo: 'Envíame un correo',
+  whatsappCorto: 'WhatsApp',
+  correoCorto: 'Correo',
   separador: 'o déjame un mensaje',
   fields: { name: 'Nombre', email: 'E-mail', subject: 'Asunto', message: 'Mensaje' },
   send: 'Enviar',

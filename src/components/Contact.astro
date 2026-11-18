@@ -10,7 +10,7 @@ const field =
   'w-full rounded-[14px] border border-[#ddd3c2] bg-cream px-5 text-[15px] text-ink placeholder:text-[#9a948a] focus:border-olive focus:ring-2 focus:ring-olive/20 focus:outline-none';
 ---
 
-<section id="contacto" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+<section id="contacto" data-fall-area class="relative bg-cream px-6 py-12 md:px-10 md:py-16 lg:px-[120px] lg:py-[72px]">
   <Decor morph blobs={{ left: { color: '#B47A57', top: '18%' }, right: { color: '#5D6C52', top: '55%' } }} />
   <!-- Lluvia de hojas por la sección, por detrás del formulario -->
   <Deco pieza="maple" cae class="top-6 left-[5%] z-[1] w-[22px] md:w-[30px]" />
@@ -21,7 +21,7 @@ const field =
   <!-- Rama terracota que entra desde el borde derecho de la pantalla (volteada: el tallo
        apunta al borde y su base queda fuera de la vista) -->
   <Deco pieza="terracota" flip class="top-[52%] -right-[27px] z-[1] w-[80px] md:-right-[30px] md:w-[110px] lg:-right-[34px] lg:w-[160px]" />
-  <SectionTitle title={contact.title} />
+  <SectionTitle title={contact.title} class="mb-6! md:mb-8!" />
 
   <div class="relative z-[2] mx-auto w-full max-w-[760px]">
     <!-- Ramas que nacen DETRÁS del formulario: la base del tallo queda bajo la tarjeta
@@ -29,39 +29,46 @@ const field =
     <Deco pieza="olivo" id="rama-contacto-olivo" class="-top-[71px] -left-[33px] z-[1] w-[70px] md:-top-[197px] md:-left-[105px] md:w-[150px]" />
     <Deco pieza="olivo" id="rama-contacto-olivo-der" flip class="-top-[71px] -right-[33px] z-[1] w-[70px] md:-top-[197px] md:-right-[105px] md:w-[150px]" />
 
-    <div class="relative z-[2] rounded-3xl border border-line bg-card px-5 py-7 md:px-14 md:py-12">
-      <p class="text-center text-[15px] leading-relaxed text-muted md:text-lg">{contact.intro}</p>
+    <div class="relative z-[2] rounded-3xl border border-line bg-card px-5 py-6 md:px-12 md:py-9">
+      <p class="text-center text-[15px] leading-relaxed text-muted md:text-base">{contact.intro}</p>
 
       <!-- Contacto directo: WhatsApp (abre el chat con un saludo ya escrito) y correo -->
-      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <a href={whatsappUrl} target="_blank" rel="noopener" class="inline-flex h-[50px] items-center justify-center gap-2.5 rounded-full bg-olive px-7 text-[15px] font-semibold text-white shadow-[0_6px_16px_rgba(79,91,54,0.22)] transition hover:-translate-y-0.5 hover:bg-olive-dark">
-          <Icon name="whatsapp" size={20} /> {contact.whatsapp}
+      <div class="mt-4 flex justify-center gap-2.5">
+        <a href={whatsappUrl} target="_blank" rel="noopener" class="inline-flex h-[46px] flex-1 items-center justify-center gap-2 rounded-full bg-olive px-4 sm:flex-none sm:px-7 text-[15px] font-semibold text-white shadow-[0_6px_16px_rgba(79,91,54,0.22)] transition hover:-translate-y-0.5 hover:bg-olive-dark">
+          <Icon name="whatsapp" size={20} /> <span class="sm:hidden">{contact.whatsappCorto}</span><span class="hidden sm:inline">{contact.whatsapp}</span>
         </a>
-        <a href={`mailto:${site.email}`} class="inline-flex h-[50px] items-center justify-center gap-2.5 rounded-full border-[1.5px] border-olive px-7 text-[15px] font-semibold text-olive-dark transition hover:-translate-y-0.5 hover:bg-olive hover:text-white">
-          <Icon name="mail" size={18} /> {contact.correo}
+        <a href={`mailto:${site.email}`} class="inline-flex h-[46px] flex-1 items-center justify-center gap-2 rounded-full border-[1.5px] border-olive px-4 sm:flex-none sm:px-7 text-[15px] font-semibold text-olive-dark transition hover:-translate-y-0.5 hover:bg-olive hover:text-white">
+          <Icon name="mail" size={18} /> <span class="sm:hidden">{contact.correoCorto}</span><span class="hidden sm:inline">{contact.correo}</span>
         </a>
       </div>
 
-      <div class="my-7 flex items-center gap-4 text-sm text-muted" aria-hidden="true">
+      <div class="my-5 flex items-center gap-4 text-sm text-muted" aria-hidden="true">
         <span class="h-px flex-1 bg-line"></span>{contact.separador}<span class="h-px flex-1 bg-line"></span>
       </div>
 
-    <form id="contact-form" class="flex flex-col gap-4" novalidate>
-      <label class="sr-only" for="cf-name">{contact.fields.name}</label>
-      <input id="cf-name" name="name" required autocomplete="name" placeholder={contact.fields.name} class={`${field} h-[54px]`} />
-      <label class="sr-only" for="cf-email">{contact.fields.email}</label>
-      <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder={contact.fields.email} class={`${field} h-[54px]`} />
+    <form id="contact-form" class="flex flex-col gap-3" novalidate>
+      <!-- Nombre y E-mail en la misma fila para que la sección quepa entera en pantalla -->
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="sr-only" for="cf-name">{contact.fields.name}</label>
+          <input id="cf-name" name="name" required autocomplete="name" placeholder={contact.fields.name} class={`${field} h-[48px]`} />
+        </div>
+        <div>
+          <label class="sr-only" for="cf-email">{contact.fields.email}</label>
+          <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder={contact.fields.email} class={`${field} h-[48px]`} />
+        </div>
+      </div>
       <label class="sr-only" for="cf-subject">{contact.fields.subject}</label>
-      <input id="cf-subject" name="subject" placeholder={contact.fields.subject} class={`${field} h-[54px]`} />
+      <input id="cf-subject" name="subject" placeholder={contact.fields.subject} class={`${field} h-[48px]`} />
       <label class="sr-only" for="cf-message">{contact.fields.message}</label>
-      <textarea id="cf-message" name="message" required rows="5" placeholder={contact.fields.message} class={`${field} h-[150px] resize-y py-4`}></textarea>
+      <textarea id="cf-message" name="message" required rows="5" placeholder={contact.fields.message} class={`${field} h-[96px] resize-y py-3 md:h-[110px]`}></textarea>
       <!-- Campo trampa contra bots: invisible para las personas -->
       <div class="absolute -left-[9999px]" aria-hidden="true">
         <label for="cf-web">No rellenes este campo</label>
         <input id="cf-web" name="web" tabindex="-1" autocomplete="off" />
       </div>
       <p id="cf-estado" class="hidden rounded-xl px-4 py-3 text-center text-sm" role="status" aria-live="polite"></p>
-      <div class="mt-2 flex justify-center">
+      <div class="mt-1 flex justify-center">
         <button id="cf-enviar" type="submit" class="inline-flex disabled:cursor-wait disabled:opacity-70 h-[46px] items-center justify-center rounded-full bg-olive px-14 text-[15px] font-medium text-white transition hover:bg-olive-dark md:h-[50px] md:text-base">
           {contact.send}
         </button>
