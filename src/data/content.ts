@@ -31,7 +31,7 @@ export const hero = {
   greeting: 'Hola! Soy',
   intro:
     'Desarrolladora web con experiencia en React, Node.js, Express y PostgreSQL. Creo aplicaciones web completas, mantenibles y agradables de usar.',
-  downloadCv: 'Descargar CV',
+  downloadCv: 'Ver CV',
   contact: 'Contacto',
 };
 
@@ -42,9 +42,9 @@ export const about = {
     [
       { text: 'Soy desarrolladora web full stack junior. He finalizado el ciclo de ' },
       { text: 'Desarrollo de Aplicaciones Web (DAW)', bold: true },
-      { text: ' y hago prácticas en ' },
+      { text: ' y he realizado mis prácticas en ' },
       { text: 'Multiplicalia', bold: true },
-      { text: ', donde trabajo con React, WordPress, n8n, PostgreSQL y Docker.' },
+      { text: ', donde trabajé con React, WordPress, n8n, PostgreSQL y Docker.' },
     ],
     [
       {
@@ -62,7 +62,7 @@ export const experience = {
   title: 'Experiencia',
   jobs: [
     {
-      date: '06/2026 – Presente',
+      date: '06/2026 – Finalizado',
       company: 'Multiplicalia',
       type: 'Prácticas de empresa',
       role: 'Desarrolladora Web / Automatización',
@@ -75,6 +75,19 @@ export const experience = {
         'Trabajo en equipo con metodologías ágiles y principios de código limpio (SOLID).',
       ],
       tags: ['React', 'WordPress', 'n8n', 'PostgreSQL', 'Supabase', 'Firebase', 'Docker'],
+    },
+    {
+      date: '05/2025 – 07/2025',
+      company: 'Centro Médico Riveira',
+      type: 'Prácticas de empresa',
+      role: 'Seguridad Informática y Bases de Datos',
+      tasks: [
+        'Configuración de acceso compartido a bases de datos en red local con control de seguridad.',
+        'Recuperación de archivos, clonado de discos y creación de medios de instalación.',
+        'Instalación y configuración de software, equipos e impresoras en red.',
+        'Detección y resolución de incidencias para garantizar el correcto funcionamiento de los sistemas.',
+      ],
+      tags: ['Bases de datos', 'Redes locales', 'Seguridad', 'Soporte técnico'],
     },
   ],
 };

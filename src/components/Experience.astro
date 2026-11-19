@@ -4,42 +4,48 @@ import SectionTitle from './SectionTitle.astro';
 import Deco from './Deco.astro';
 ---
 
-<section id="experiencia" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">
+<section id="experiencia" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[60px] lg:py-[72px] xl:px-[120px]">
   <!-- Hojas que caen por la sección, por detrás de la tarjeta (nunca tapan el texto) -->
   <Deco pieza="falling" cae class="top-4 left-[4%] z-[1] w-[22px] md:w-[28px]" />
   <Deco pieza="fallen" cae class="top-24 left-[20%] z-[1] w-[20px] md:w-[26px]" />
   <Deco pieza="maple" cae class="top-6 left-[50%] z-[1] w-[22px] md:w-[30px]" />
   <Deco pieza="falling" cae class="top-20 right-[18%] z-[1] w-[20px] md:w-[26px]" />
   <Deco pieza="fallen" cae class="top-2 right-[5%] z-[1] w-[22px] md:w-[28px]" />
-  <Deco pieza="maple" class="top-10 left-[8%] w-[26px] md:w-[34px] lg:top-16 lg:left-[14%] lg:w-[42px]" />
-  <SectionTitle title={experience.title} />
+  <Deco pieza="maple" class="top-10 right-[8%] w-[26px] md:w-[34px] lg:top-16 lg:right-[20%] lg:w-[42px]" />
+  <SectionTitle title={experience.title} class="lg:mb-10!" />
 
-  {
-    experience.jobs.map((job) => (
-      <article class="relative z-[2] mx-auto flex max-w-[1000px] flex-col gap-[22px] rounded-2xl border border-line bg-card p-6 md:flex-row md:gap-7 md:p-8 lg:gap-12 lg:p-11">
-        <div class="flex shrink-0 flex-col items-start gap-2.5 md:w-[180px] lg:w-[230px]">
-          <span class="rounded-full bg-sand px-3.5 py-1.5 text-[13px] font-semibold text-terra">{job.date}</span>
-          <h3 class="font-serif text-[28px] leading-[1.1] text-olive-dark lg:text-[34px]">{job.company}</h3>
-          <p class="text-sm font-medium text-muted">{job.type}</p>
-        </div>
-        <div class="flex-1">
-          <p class="mb-[18px] text-lg font-semibold text-terra md:text-[19px] lg:text-[22px]">{job.role}</p>
-          <ul class="flex flex-col gap-2.5 text-[15px] leading-relaxed text-muted lg:text-base">
+  <div class="relative z-[2] mx-auto max-w-[1000px]">
+  <!-- Ramas de olivo que nacen DETRÁS de las tarjetas (la base del tallo queda oculta):
+       una sale de la esquina superior izquierda de Multiplicalia y otra de la esquina
+       inferior derecha de Centro Médico Riveira (girada hacia abajo) -->
+  <Deco pieza="olivo" id="rama-exp-olivo-sup" class="-top-[71px] -left-[33px] z-[1] w-[70px] md:-top-[197px] md:-left-[105px] md:w-[150px]" />
+  <Deco pieza="olivo" id="rama-exp-olivo-inf" class="-bottom-[71px] -right-[33px] z-[1] w-[70px] rotate-180 md:-bottom-[197px] md:-right-[105px] md:w-[150px]" />
+  <!-- Tarjetas de experiencia: una al lado de la otra desde tablet, apiladas en móvil -->
+  <ul class="relative z-[2] grid gap-5 md:grid-cols-2 md:gap-6">
+    {
+      experience.jobs.map((job) => (
+        <li class="flex flex-col gap-3 rounded-2xl border border-line bg-card p-6">
+          <div class="flex flex-col items-start gap-1.5">
+            <span class="rounded-full bg-sand px-3.5 py-1.5 text-[13px] font-semibold text-terra">{job.date}</span>
+            <h3 class="font-serif text-[24px] leading-[1.15] text-olive-dark">{job.company}</h3>
+            <p class="text-sm font-medium text-muted">{job.type}</p>
+          </div>
+          <p class="text-base leading-snug font-semibold text-terra">{job.role}</p>
+          <ul class="flex flex-col gap-1.5 text-[14px] leading-normal text-muted">
             {job.tasks.map((task) => (
               <li class="relative pl-5 before:absolute before:top-[0.65em] before:left-0 before:size-[7px] before:rounded-full before:bg-sage before:content-['']">
                 {task}
               </li>
             ))}
           </ul>
-          <ul class="mt-[18px] flex flex-wrap gap-1.5" aria-label="Tecnologías">
+          <ul class="mt-auto flex flex-wrap gap-1.5 pt-1" aria-label="Tecnologías">
             {job.tags.map((tag) => (
               <li class="rounded-full bg-sand px-2.5 py-1 text-xs">{tag}</li>
             ))}
           </ul>
-        </div>
-      </article>
-    ))
-  }
-  <!-- Olivo con frutos que cruza hacia Habilidades -->
-  <Deco pieza="frutos" class="-right-3 -bottom-14 z-[6] w-[90px] md:-bottom-20 md:w-[120px] lg:-right-4 lg:-bottom-24 lg:w-[170px]" />
+        </li>
+      ))
+    }
+  </ul>
+  </div>
 </section>
