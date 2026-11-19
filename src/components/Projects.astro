@@ -7,16 +7,19 @@ import Deco from './Deco.astro';
 import { Image } from 'astro:assets';
 import capturaSerena from '../assets/proyectos/serena-hotel.png';
 import capturaPortfolio from '../assets/proyectos/portfolio.png';
+import capturaEuroproject from '../assets/proyectos/europroject.png';
 
 // Capturas reales de cada proyecto (si no hay, se muestra la maqueta de ventana)
 const capturas: Record<string, ImageMetadata> = {
   hotel: capturaSerena,
+  europroject: capturaEuroproject,
   portfolio: capturaPortfolio,
 };
 
 const shotColors: Record<string, string> = {
   hotel: 'bg-[#cdbba8]',
   sushi: 'bg-[#e3b9a0]',
+  europroject: 'bg-[#b9cfc4]',
   portfolio: 'bg-[#c8cfb4]',
 };
 const btn =
@@ -92,9 +95,11 @@ const btn =
             ) : (
               <span class={`${btn} cursor-default border-[1.5px] border-olive-button text-olive-button opacity-70`}>PRONTO</span>
             )}
-            <a href={p.repo} target="_blank" rel="noopener" class={`${btn} border-[1.5px] border-olive-button text-olive-button hover:bg-olive-button hover:text-white`}>
-              <Icon name="github" /> REPO
-            </a>
+            {p.repo && (
+              <a href={p.repo} target="_blank" rel="noopener" class={`${btn} border-[1.5px] border-olive-button text-olive-button hover:bg-olive-button hover:text-white`}>
+                <Icon name="github" /> REPO
+              </a>
+            )}
           </div>
         </li>
       ))

@@ -149,15 +149,16 @@ export const projects = {
       repo: 'https://github.com/SinthiaGonzalez/serena-hotel',
     },
     {
-      name: 'Sushi Restaurant',
-      mockTitle: 'Sushi',
-      status: 'soon',
-      statusLabel: 'Próximamente',
-      color: 'sushi',
-      description: 'App para un restaurante de sushi: carta, pedidos y reservas. Pronto estará desplegada.',
-      tags: ['Next.js', 'TypeScript'],
-      demo: null,
-      repo: 'https://github.com/SinthiaGonzalez/sushi-restaurant-automation',
+      name: 'Asistente IA · Europroject',
+      status: 'live',
+      statusLabel: '● En línea',
+      color: 'europroject',
+      description:
+        'Módulo de asistente de ventas con IA para la tienda online de Instituto Europroject, desarrollado en Multiplicalia. Ayuda a los clientes a encontrar productos desde un chat.',
+      tags: ['PrestaShop', 'JavaScript', 'n8n', 'IA'],
+      demo: 'https://institutoeuroproject.com/es/195-mobiliario-geriatrico',
+      // Código de empresa: sin repositorio público
+      repo: null,
     },
     {
       name: 'Portfolio',
