@@ -6,6 +6,7 @@ export const site = {
   ...sharedSite,
   role: 'Full Stack Web Developer',
   roleJunior: 'Junior Full Stack Web Developer',
+  cvUrl: '/SinthiaGonzalez_CV_2026_EN.pdf',
 };
 
 export const nav = [
