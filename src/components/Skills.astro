@@ -1,8 +1,10 @@
 ---
-import { skills } from '../data/content';
+import { useContent } from '../i18n';
 import SectionTitle from './SectionTitle.astro';
 import Decor from './Decor.astro';
 import Deco from './Deco.astro';
+
+const { skills } = useContent(Astro.currentLocale);
 
 // Carga todos los iconos de src/assets/skills como URLs
 const icons = import.meta.glob<{ default: { src: string } }>('../assets/skills/*.svg', { eager: true });

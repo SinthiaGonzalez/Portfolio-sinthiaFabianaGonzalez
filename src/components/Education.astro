@@ -1,8 +1,10 @@
 ---
-import { education } from '../data/content';
+import { useContent } from '../i18n';
 import SectionTitle from './SectionTitle.astro';
 import Decor from './Decor.astro';
 import Deco from './Deco.astro';
+
+const { education } = useContent(Astro.currentLocale);
 ---
 
 <section id="formacion" data-fall-area class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">

@@ -9,6 +9,13 @@ export default defineConfig({
   site: 'https://sinthiagonzalez.com',
   integrations: [react()],
 
+  // Español en "/" (sin prefijo) e inglés en "/en/"
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
+
   vite: {
     plugins: [tailwindcss()]
   }

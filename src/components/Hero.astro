@@ -1,8 +1,10 @@
 ---
-import { hero, site } from '../data/content';
+import { useContent } from '../i18n';
 import HeroVisual from './HeroVisual.astro';
 import Icon from './Icon.astro';
 import Deco from './Deco.astro';
+
+const { hero, site } = useContent(Astro.currentLocale);
 
 const socials = [
   { name: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },

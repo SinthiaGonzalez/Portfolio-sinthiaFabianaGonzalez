@@ -1,0 +1,28 @@
+---
+// Portada completa. La usan src/pages/index.astro (español) y src/pages/en/index.astro (inglés):
+// los componentes son los mismos y solo cambian los textos según el idioma de la URL.
+import Layout from '../layouts/Layout.astro';
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import About from './About.astro';
+import Experience from './Experience.astro';
+import Skills from './Skills.astro';
+import Education from './Education.astro';
+import Projects from './Projects.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <Hero />
+    <About />
+    <Experience />
+    <Skills />
+    <Education />
+    <Projects />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>

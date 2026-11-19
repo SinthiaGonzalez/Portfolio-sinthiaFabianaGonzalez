@@ -1,5 +1,5 @@
 ---
-import { projects } from '../data/content';
+import { useContent } from '../i18n';
 import SectionTitle from './SectionTitle.astro';
 import Decor from './Decor.astro';
 import Icon from './Icon.astro';
@@ -8,6 +8,8 @@ import { Image } from 'astro:assets';
 import capturaSerena from '../assets/proyectos/serena-hotel.png';
 import capturaPortfolio from '../assets/proyectos/portfolio.png';
 import capturaEuroproject from '../assets/proyectos/europroject.png';
+
+const { projects, ui } = useContent(Astro.currentLocale);
 
 // Capturas reales de cada proyecto (si no hay, se muestra la maqueta de ventana)
 const capturas: Record<string, ImageMetadata> = {
@@ -80,7 +82,7 @@ const btn =
           <div class="flex-1 px-7 pt-[26px] pb-2">
             <h3 class="mb-2.5 font-serif text-2xl lg:text-[28px]">{p.name}</h3>
             <p class="text-[15px] leading-relaxed text-muted">{p.description}</p>
-            <ul class="mt-3.5 flex flex-wrap gap-1.5" aria-label="Tecnologías">
+            <ul class="mt-3.5 flex flex-wrap gap-1.5" aria-label={ui.tech}>
               {p.tags.map((tag) => (
                 <li class="rounded-full bg-sand px-2.5 py-1 text-xs">{tag}</li>
               ))}
@@ -93,7 +95,7 @@ const btn =
                 <Icon name="eye" size={16} /> DEMO
               </a>
             ) : (
-              <span class={`${btn} cursor-default border-[1.5px] border-olive-button text-olive-button opacity-70`}>PRONTO</span>
+              <span class={`${btn} cursor-default border-[1.5px] border-olive-button text-olive-button opacity-70`}>{ui.soon}</span>
             )}
             {p.repo && (
               <a href={p.repo} target="_blank" rel="noopener" class={`${btn} border-[1.5px] border-olive-button text-olive-button hover:bg-olive-button hover:text-white`}>

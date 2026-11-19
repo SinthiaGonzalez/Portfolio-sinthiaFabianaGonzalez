@@ -1,4 +1,6 @@
 ---
+import { useContent } from '../i18n';
+const { ui } = useContent(Astro.currentLocale);
 // Ilustración de "Sobre mí" (exportada del diseño).
 import avatar from '../assets/avatar-about.png';
 import Maple from '../assets/deco/piezas/hoja-maple.svg';
@@ -7,7 +9,7 @@ import Fallen from '../assets/deco/piezas/hoja-fallen.svg';
 import Guirnalda from '../assets/deco/piezas/guirnalda-avatar.svg';
 ---
 
-<svg data-fall-area class="h-auto w-full overflow-visible" role="img" aria-label="Ilustración de Sinthia trabajando con su portátil y un café" width="480" height="570" viewBox="0 0 480 570" xmlns="http://www.w3.org/2000/svg">
+<svg data-fall-area class="h-auto w-full overflow-visible" role="img" aria-label={ui.aboutArt} width="480" height="570" viewBox="0 0 480 570" xmlns="http://www.w3.org/2000/svg">
  <defs>
   <!-- El avatar va dentro del círculo de fondo: la cabeza sobresale por arriba y el cuerpo
        termina con la curva del círculo (centro 245,335 · radio 215, amplio para que se vean

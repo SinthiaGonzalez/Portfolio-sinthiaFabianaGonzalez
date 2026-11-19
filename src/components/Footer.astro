@@ -1,6 +1,8 @@
 ---
-import { footer, site } from '../data/content';
+import { useContent } from '../i18n';
 import Icon from './Icon.astro';
+
+const { footer, site, ui } = useContent(Astro.currentLocale);
 
 const socials = [
   { name: 'linkedin', href: site.social.linkedin, label: 'LinkedIn' },
@@ -10,7 +12,7 @@ const socials = [
 ---
 
 <footer class="relative flex flex-col items-center gap-[18px] bg-olive-dark px-6 py-10 text-[#e9e6dc] lg:px-[120px]">
-  <a href="#inicio" class="absolute -top-7 right-6 flex size-14 items-center justify-center rounded-full bg-terra text-white shadow-[0_8px_20px_rgba(0,0,0,0.15)] transition hover:-translate-y-0.5 lg:right-12" aria-label="Volver arriba">
+  <a href="#inicio" class="absolute -top-7 right-6 flex size-14 items-center justify-center rounded-full bg-terra text-white shadow-[0_8px_20px_rgba(0,0,0,0.15)] transition hover:-translate-y-0.5 lg:right-12" aria-label={ui.backToTop}>
     <Icon name="chevron-up" size={22} />
   </a>
   <div class="flex gap-3.5">

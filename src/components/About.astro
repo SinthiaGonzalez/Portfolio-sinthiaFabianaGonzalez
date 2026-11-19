@@ -1,9 +1,11 @@
 ---
-import { about, site } from '../data/content';
+import { useContent } from '../i18n';
 import SectionTitle from './SectionTitle.astro';
 import AboutArt from './AboutArt.astro';
 import FernsBg from '../assets/deco/deco-s1-1.svg';
 import Deco from './Deco.astro';
+
+const { about, site } = useContent(Astro.currentLocale);
 ---
 
 <section id="sobre-mi" class="relative bg-cream px-6 py-16 md:px-10 md:py-20 lg:px-[120px] lg:py-[100px]">

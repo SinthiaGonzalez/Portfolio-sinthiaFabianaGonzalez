@@ -1,19 +1,18 @@
 ---
 import '../styles/global.css';
+import { useContent, homePath } from '../i18n';
 
 interface Props {
   title?: string;
   description?: string;
 }
 
-const {
-  title = 'Sinthia González · Desarrolladora Web Full Stack',
-  description = 'Portfolio de Sinthia Fabiana González, desarrolladora web full stack junior.',
-} = Astro.props;
+const { ui } = useContent(Astro.currentLocale);
+const { title = ui.meta.title, description = ui.meta.description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={ui.lang}>
   <head>
     <meta charset="utf-8" />
     <!-- Marca que hay JavaScript: solo entonces se ocultan los elementos que entran con animación -->
@@ -27,6 +26,11 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={ui.lang === 'en' ? 'en_GB' : 'es_ES'} />
+    <!-- Le dice a Google que la misma página existe en los dos idiomas -->
+    <link rel="alternate" hreflang="es" href={new URL(homePath('es'), Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(homePath('en'), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(homePath('es'), Astro.site)} />
   </head>
   <body>
     <!-- Las ramas decorativas salen por los lados: se recortan aquí para evitar el scroll horizontal -->

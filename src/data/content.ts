@@ -1,21 +1,8 @@
 // Contenido del portfolio (datos del CV 2026). Todo el texto está aquí para
 // poder añadir más adelante la versión en inglés sin tocar los componentes.
+import { skillsMain } from './shared';
 
-export const site = {
-  name: 'Sinthia González',
-  fullName: 'Sinthia Fabiana González',
-  role: 'Desarrolladora Web Full Stack',
-  roleJunior: 'Desarrolladora Web Full Stack Junior',
-  email: 'gonzalez.sinthia@icloud.com',
-  // WhatsApp: número en formato internacional sin '+' ni espacios (para wa.me)
-  whatsapp: '34744752815',
-  location: 'Boiro, A Coruña',
-  cvUrl: '/SinthiaGonzalez_CV_2026.pdf',
-  social: {
-    linkedin: 'https://linkedin.com/in/sinthiagonzalez',
-    github: 'https://github.com/SinthiaGonzalez',
-  },
-};
+export { site } from './shared';
 
 export const nav = [
   { id: 'inicio', label: 'Home' },
@@ -99,26 +86,7 @@ export const experience = {
 // `icon` = nombre del archivo en src/assets/skills (sin .svg)
 export const skills = {
   title: 'Habilidades',
-  main: [
-    { name: 'JavaScript', icon: 'javascript' },
-    { name: 'TypeScript', icon: 'typescript' },
-    { name: 'React', icon: 'react' },
-    { name: 'Redux', icon: 'redux' },
-    { name: 'Next.js', icon: 'next-js' },
-    { name: 'HTML5', icon: 'html5' },
-    { name: 'CSS3', icon: 'css3' },
-    { name: 'Tailwind', icon: 'tailwind' },
-    { name: 'Node.js', icon: 'node-js' },
-    { name: 'Express', icon: 'express' },
-    { name: 'PostgreSQL', icon: 'postgresql' },
-    { name: 'Supabase', icon: 'supabase' },
-    { name: 'Docker', icon: 'docker' },
-    { name: 'Git', icon: 'git' },
-    { name: 'GitHub', icon: 'github' },
-    { name: 'Postman', icon: 'postman' },
-    { name: 'Figma', icon: 'figma' },
-    { name: 'WordPress', icon: 'wordpress' },
-  ],
+  main: skillsMain,
   moreTitle: 'Más tecnologías',
   more: ['Java', 'SQL', 'Bootstrap', 'Firebase', 'n8n', 'API REST', 'Scrum · SOLID'],
 };
@@ -189,4 +157,34 @@ export const contact = {
 export const footer = {
   madeWith: 'Copyright © 2026 | Hecho con',
   by: 'por',
+};
+
+// Textos sueltos de la interfaz (etiquetas de accesibilidad, mensajes del formulario…)
+export const ui = {
+  lang: 'es',
+  meta: {
+    title: 'Sinthia González · Desarrolladora Web Full Stack',
+    description: 'Portfolio de Sinthia Fabiana González, desarrolladora web full stack junior.',
+  },
+  navAria: 'Principal',
+  home: 'Inicio',
+  langAria: 'Idioma',
+  openMenu: 'Abrir menú',
+  closeMenu: 'Cerrar menú',
+  tech: 'Tecnologías',
+  soon: 'PRONTO',
+  backToTop: 'Volver arriba',
+  aboutArt: 'Ilustración de Sinthia trabajando con su portátil y un café',
+  honeypot: 'No rellenes este campo',
+  form: {
+    invalid: 'Rellena tu nombre, un e-mail válido y el mensaje.',
+    sending: 'Enviando…',
+    sent: '¡Mensaje enviado! 🌿 Gracias por escribirme, te responderé lo antes posible.',
+    failed: 'No se ha podido enviar el mensaje.',
+    tooMany: 'Has enviado varios mensajes seguidos. Espera un minuto e inténtalo de nuevo.',
+    alsoWhatsapp: 'También puedes',
+    whatsappLink: 'escribirme por WhatsApp',
+    offline: 'No hay conexión ahora mismo. Inténtalo de nuevo o',
+    offlineLink: 'escríbeme por WhatsApp',
+  },
 };

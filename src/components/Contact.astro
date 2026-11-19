@@ -1,9 +1,11 @@
 ---
-import { contact, site } from '../data/content';
+import { useContent } from '../i18n';
 import SectionTitle from './SectionTitle.astro';
 import Decor from './Decor.astro';
 import Icon from './Icon.astro';
 import Deco from './Deco.astro';
+
+const { contact, site, ui } = useContent(Astro.currentLocale);
 
 const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(contact.whatsappMensaje)}`;
 const field =
@@ -64,7 +66,7 @@ const field =
       <textarea id="cf-message" name="message" required rows="5" placeholder={contact.fields.message} class={`${field} h-[96px] resize-y py-3 md:h-[110px]`}></textarea>
       <!-- Campo trampa contra bots: invisible para las personas -->
       <div class="absolute -left-[9999px]" aria-hidden="true">
-        <label for="cf-web">No rellenes este campo</label>
+        <label for="cf-web">{ui.honeypot}</label>
         <input id="cf-web" name="web" tabindex="-1" autocomplete="off" />
       </div>
       <p id="cf-estado" class="hidden rounded-xl px-4 py-3 text-center text-sm" role="status" aria-live="polite"></p>
@@ -83,7 +85,7 @@ const field =
   </div>
 </section>
 
-<script define:vars={{ whatsapp: whatsappUrl }}>
+<script define:vars={{ whatsapp: whatsappUrl, t: ui.form, lang: ui.lang }}>
   // Envía el formulario al Worker (/api/contacto), que reenvía el mensaje por email a Sinthia.
   const form = document.getElementById('contact-form');
   const estado = document.getElementById('cf-estado');
@@ -98,11 +100,11 @@ const field =
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) {
-      mostrar('Rellena tu nombre, un e-mail válido y el mensaje.', 'error');
+      mostrar(t.invalid, 'error');
       return;
     }
     boton.disabled = true;
-    boton.textContent = 'Enviando…';
+    boton.textContent = t.sending;
     estado.className = 'hidden';
     try {
       const res = await fetch('/api/contacto', {
@@ -113,12 +115,14 @@ const field =
       const datos = await res.json().catch(() => ({}));
       if (res.ok && datos.ok) {
         form.reset();
-        mostrar('¡Mensaje enviado! 🌿 Gracias por escribirme, te responderé lo antes posible.', 'ok');
+        mostrar(t.sent, 'ok');
       } else {
-        mostrar(`${datos.error ?? 'No se ha podido enviar el mensaje.'} También puedes <a class="font-semibold underline" href="${whatsapp}" target="_blank" rel="noopener">escribirme por WhatsApp</a>.`, 'error');
+        // El Worker responde en español: en inglés se usa el mensaje traducido equivalente
+        const error = lang === 'es' ? (datos.error ?? t.failed) : res.status === 429 ? t.tooMany : t.failed;
+        mostrar(`${error} ${t.alsoWhatsapp} <a class="font-semibold underline" href="${whatsapp}" target="_blank" rel="noopener">${t.whatsappLink}</a>.`, 'error');
       }
     } catch {
-      mostrar(`No hay conexión ahora mismo. Inténtalo de nuevo o <a class="font-semibold underline" href="${whatsapp}" target="_blank" rel="noopener">escríbeme por WhatsApp</a>.`, 'error');
+      mostrar(`${t.offline} <a class="font-semibold underline" href="${whatsapp}" target="_blank" rel="noopener">${t.offlineLink}</a>.`, 'error');
     } finally {
       boton.disabled = false;
       boton.textContent = textoBoton;
