@@ -40,15 +40,19 @@ export const about = {
   // Los fragmentos con `bold: true` se muestran en negrita.
   paragraphs: [
     [
-      { text: 'Soy desarrolladora web full stack junior. He finalizado el ciclo de ' },
+      { text: 'Soy desarrolladora web full stack junior, en la recta final del ciclo de ' },
       { text: 'Desarrollo de Aplicaciones Web (DAW)', bold: true },
-      { text: ' y he realizado mis prácticas en ' },
+      { text: ' y realizando mis prácticas en ' },
       { text: 'Multiplicalia', bold: true },
-      { text: ', donde trabajé con React, WordPress, n8n, PostgreSQL y Docker.' },
+      { text: ', donde trabajo con React, WordPress, n8n, PostgreSQL y Docker.' },
     ],
     [
+      { text: 'Me formé en ' },
+      { text: 'Soy Henry', bold: true },
+      { text: ', donde desarrollé ' },
+      { text: 'Serena Hotel', bold: true },
       {
-        text: 'Me formé en Soy Henry, donde desarrollé Serena Hotel en equipo. Trabajo con Scrum y principios de código limpio (SOLID), y tengo experiencia con APIs REST, automatización de procesos y bases de datos. Busco incorporarme como programadora web junior y seguir creciendo.',
+        text: ' en equipo. Trabajo bajo metodología Scrum y principios de código limpio (SOLID), y cuento con experiencia en APIs REST, automatización de procesos y bases de datos. Busco incorporarme como programadora web junior para seguir creciendo y aportando valor desde el primer día.',
       },
     ],
   ],
@@ -62,7 +66,7 @@ export const experience = {
   title: 'Experiencia',
   jobs: [
     {
-      date: '06/2026 – Finalizado',
+      date: '06/2026 – Presente',
       company: 'Multiplicalia',
       type: 'Prácticas de empresa',
       role: 'Desarrolladora Web / Automatización',
@@ -122,7 +126,7 @@ export const skills = {
 export const education = {
   title: 'Formación',
   items: [
-    { logo: 'ceac', title: 'Desarrollo de Aplicaciones Web (DAW)', org: 'CEAC FP Oficial', date: '09/2024 - Finalizado' },
+    { logo: 'ceac', title: 'Desarrollo de Aplicaciones Web (DAW)', org: 'CEAC FP Oficial', date: '09/2024 - Presente' },
     { logo: 'arca', title: 'Seguridad informática · IFCT0109', org: 'Academia Arca', date: '11/2024 - 05/2025' },
     { logo: 'henry', title: 'Full Stack Web Developer', org: 'Campus Virtual Henry', date: '04/2023 - 12/2023' },
   ],
